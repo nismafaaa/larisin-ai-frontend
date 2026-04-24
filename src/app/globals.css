@@ -1,26 +1,202 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand Colors */
+  --color-primary: #5B6DFF;
+  --color-primary-main: #4E8FF3;
+  --color-primary-dark: #4a5de6;
+
+  /* Accent Colors */
+  --color-accent-light: #69D1F4;
+  --color-accent-chat: #D0E6FE;
+
+  /* Neutral Colors */
+  --color-neutral-bg: #FFFFFF;
+  --color-neutral-card: #F9FAFB;
+  --color-neutral-border: #E5E7EB;
+
+  /* Text Colors */
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+
+  /* State Colors */
+  --color-state-success: #22C55E;
+  --color-state-error: #EF4444;
+
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.4);
+
+  /* Shadows */
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-card: 18px;
+  --radius-pill: 30px;
+  --radius-full: 9999px;
+
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f4f6;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Gradient backgrounds */
+.gradient-brand {
+  background: linear-gradient(180deg, #69D1F4 0%, #4E8FF3 30%, #5B6DFF 100%);
+}
+
+.gradient-header {
+  background: linear-gradient(135deg, #69D1F4 0%, #4E8FF3 50%, #5B6DFF 100%);
+}
+
+.gradient-splash {
+  background: radial-gradient(ellipse at center, #4E8FF3 0%, #69D1F4 60%, #69D1F4 100%);
+}
+
+/* Selection chip states */
+.chip-default {
+  background: var(--color-neutral-card);
+  border: 1px solid var(--color-neutral-border);
+}
+
+.chip-active {
+  background: var(--color-accent-chat);
+  border: 1px solid var(--color-primary);
+}
+
+/* Chat bubble styles */
+.bubble-ai {
+  background: var(--color-neutral-card);
+  border-radius: 4px 18px 18px 18px;
+}
+
+.bubble-user {
+  background: var(--color-accent-chat);
+  border-radius: 18px 4px 18px 18px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(91, 109, 255, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(91, 109, 255, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.45s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Scrollbar hiding for mobile feel */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area for mobile */
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 12px);
+}
+
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 12px);
+}
+
+/* Input focus ring */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(91, 109, 255, 0.15);
+}
+
+/* Custom select arrow */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  background-size: 16px 12px;
+  padding-right: 40px !important;
+}
+
+/* ==================== Layout Utilities ==================== */
+
+/* Consistent section spacing */
+.section-gap {
+  margin-bottom: 20px;
+}
+
+/* Consistent page-level horizontal padding */
+.page-padding {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Full-page dashboard gradient (soft blue → white) */
+.gradient-dashboard {
+  background: linear-gradient(180deg, #A8DCFA 0%, #7DBCF5 18%, #9ECDF8 45%, #D4E6FC 70%, #F4F7FF 100%);
 }

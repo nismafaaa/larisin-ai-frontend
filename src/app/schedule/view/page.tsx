@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import MobileLayout from '@/components/layout/MobileLayout';
 import GradientHeader from '@/components/layout/GradientHeader';
 import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 import { useScheduleStore } from '@/stores/scheduleStore';
 
 const DAYS_SHORT = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
@@ -102,8 +103,7 @@ export default function ScheduleViewPage() {
               <Card key={item.id} className="p-5 bg-accent-chat/30">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 text-center">
-                    <p className="text-lg font-bold text-state-error">{item.time}</p>
-                    <p className="text-xs text-text-secondary">WIB</p>
+                    <p className="text-lg font-bold text-state-error">{item.time} <span className="text-xs font-normal text-text-secondary">WIB</span></p>
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-text-primary text-sm mb-3">
@@ -134,9 +134,15 @@ export default function ScheduleViewPage() {
               <p className="text-text-secondary text-sm">
                 Belum ada jadwal untuk hari ini
               </p>
-              <p className="text-text-secondary/60 text-xs mt-1.5">
+              <p className="text-text-secondary/60 text-xs mt-1.5 mb-5">
                 Buat konten dan jadwalkan uploadmu!
               </p>
+              <Button
+                size="sm"
+                onClick={() => router.push('/chat')}
+              >
+                ✨ Buat Konten dengan AI
+              </Button>
             </div>
           )}
         </div>

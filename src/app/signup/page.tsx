@@ -1,18 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import MobileLayout from '@/components/layout/MobileLayout';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import LocationPicker from '@/components/ui/LocationPicker';
 import { useAuthStore } from '@/stores/authStore';
 import { authService } from '@/services/authService';
+import { Camera } from 'lucide-react';
 
 export default function SignUpPage() {
   const router = useRouter();
   const { setAuth } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState({
     nama: '',
     umur: '',
@@ -24,13 +28,45 @@ export default function SignUpPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatarPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const validate = () => {
     const e: Record<string, string> = {};
+    
+    // Name validation
     if (!form.nama.trim()) e.nama = 'Nama wajib diisi';
-    if (!form.email.trim()) e.email = 'Email wajib diisi';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Format email tidak valid';
-    if (!form.password) e.password = 'Kata sandi wajib diisi';
-    else if (form.password.length < 6) e.password = 'Minimal 6 karakter';
+    
+    // Email validation
+    if (!form.email.trim()) {
+      e.email = 'Email wajib diisi';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)) {
+      e.email = 'Format email tidak valid (contoh: nama@email.com)';
+    }
+    
+    // Phone validation
+    if (!form.nomorHp.trim()) {
+      e.nomorHp = 'Nomor handphone wajib diisi';
+    } else if (!/^\d+$/.test(form.nomorHp)) {
+      e.nomorHp = 'Nomor handphone hanya boleh berisi angka';
+    }
+    
+    // Password validation
+    if (!form.password) {
+      e.password = 'Kata sandi wajib diisi';
+    } else if (form.password.length < 8) {
+      e.password = 'Minimal 8 karakter';
+    } else if (!/(?=.*[0-9])(?=.*[!@#$%^&*])/.test(form.password)) {
+      e.password = 'Kata sandi harus mengandung angka dan karakter spesial (!@#$%^&*)';
+    }
+    
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -46,7 +82,13 @@ export default function SignUpPage() {
         password: form.password,
       });
       setAuth(
-        { name: form.nama, email: form.email, nomor_hp: form.nomorHp, lokasi: form.lokasi },
+        {
+          name: form.nama,
+          email: form.email,
+          nomor_hp: form.nomorHp,
+          lokasi: form.lokasi,
+          avatar: avatarPreview || undefined,
+        },
         res.token
       );
       router.push('/welcome');
@@ -74,9 +116,45 @@ export default function SignUpPage() {
 
       {/* Form area - overlapping white card with rounded top */}
       <div className="flex-1 bg-white rounded-t-[28px] -mt-6 relative z-10 px-7 pt-10 pb-10 overflow-y-auto hide-scrollbar">
-        <h1 className="text-2xl font-bold text-text-primary mb-8">
+        <h1 className="text-2xl font-bold text-text-primary mb-6">
           Ayo Daftarkan Bisnismu!
         </h1>
+
+        {/* Avatar Upload */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => avatarInputRef.current?.click()}
+              className="relative w-24 h-24 rounded-full bg-accent-chat flex items-center justify-center overflow-hidden border-4 border-white shadow-lg group"
+            >
+              {avatarPreview ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarPreview} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-4xl">👤</span>
+              )}
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <Camera className="w-6 h-6 text-white" />
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => avatarInputRef.current?.click()}
+              className="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center border-2 border-white shadow-md hover:bg-primary-dark transition-colors cursor-pointer"
+            >
+              <Camera className="w-4 h-4 text-white" />
+            </button>
+          </div>
+          <input
+            ref={avatarInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            className="hidden"
+          />
+          <p className="text-xs text-text-secondary mt-2">Upload foto profil</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <Input
@@ -106,16 +184,10 @@ export default function SignUpPage() {
           />
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-text-primary">Lokasi Bisnis</label>
-            <select
+            <LocationPicker
               value={form.lokasi}
-              onChange={(e) => setForm({ ...form, lokasi: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-full border border-neutral-border bg-white text-text-primary text-sm appearance-none cursor-pointer"
-            >
-              <option value="">Kota Malang</option>
-              {['Jakarta', 'Bandung', 'Surabaya', 'Yogyakarta', 'Semarang', 'Medan', 'Makassar', 'Malang', 'Denpasar', 'Palembang', 'Solo', 'Bekasi', 'Tangerang', 'Depok', 'Bogor'].map((city) => (
-                <option key={city} value={city}>{city}</option>
-              ))}
-            </select>
+              onChange={(loc) => setForm({ ...form, lokasi: loc })}
+            />
           </div>
           <Input
             label="Nomor Handphone"
@@ -123,6 +195,7 @@ export default function SignUpPage() {
             placeholder="contoh: 081234567890"
             value={form.nomorHp}
             onChange={(e) => setForm({ ...form, nomorHp: e.target.value })}
+            error={errors.nomorHp}
           />
           <Input
             label="Email"
@@ -135,7 +208,7 @@ export default function SignUpPage() {
           <Input
             label="Kata Sandi"
             type="password"
-            placeholder="Minimal 6 karakter"
+            placeholder="Min 8 karakter, huruf, angka, & simbol"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             error={errors.password}

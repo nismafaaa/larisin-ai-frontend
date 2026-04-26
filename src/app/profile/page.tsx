@@ -41,8 +41,12 @@ export default function ProfilePage() {
       <div className="flex-1 pb-8">
         {/* Avatar Section */}
         <div className="flex flex-col items-center pt-8 pb-8">
-          <div className="w-28 h-28 rounded-full bg-accent-chat flex items-center justify-center mb-5 shadow-lg border-4 border-white">
-            <User className="w-14 h-14 text-primary/50" />
+          <div className="w-28 h-28 rounded-full bg-accent-chat flex items-center justify-center mb-5 shadow-lg border-4 border-white overflow-hidden">
+            {user?.avatar ? (
+              <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <User className="w-14 h-14 text-primary/50" />
+            )}
           </div>
           <h2 className="text-xl font-bold text-text-primary">
             {user?.name || 'Pengguna'}

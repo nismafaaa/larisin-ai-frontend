@@ -18,8 +18,23 @@ export default function SignInPage() {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!form.email.trim()) e.email = 'Email wajib diisi';
-    if (!form.password) e.password = 'Password wajib diisi';
+
+    // Email validation
+    if (!form.email.trim()) {
+      e.email = 'Email wajib diisi';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)) {
+      e.email = 'Format email tidak valid (contoh: nama@email.com)';
+    }
+
+    // Password validation
+    if (!form.password) {
+      e.password = 'Kata sandi wajib diisi';
+    } else if (form.password.length < 8) {
+      e.password = 'Minimal 8 karakter';
+    } else if (!/(?=.*[0-9])(?=.*[!@#$%^&*])/.test(form.password)) {
+      e.password = 'Kata sandi harus mengandung angka dan karakter spesial (!@#$%^&*)';
+    }
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };

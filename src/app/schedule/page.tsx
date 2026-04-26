@@ -13,16 +13,6 @@ import { RECOMMENDED_TIMES } from '@/lib/constants';
 const DAYS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 const MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-const getRecommendedDates = (year: number, month: number) => {
-  const dates: number[] = [];
-  const d = new Date(year, month + 1, 0).getDate();
-  for (let i = 1; i <= d; i++) {
-    const day = new Date(year, month, i).getDay();
-    if (day === 2 || day === 6) dates.push(i);
-  }
-  return dates;
-};
-
 export default function SchedulePage() {
   const router = useRouter();
   const { addItem, setSelectedDate: setStoredDate } = useScheduleStore();
@@ -35,10 +25,28 @@ export default function SchedulePage() {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [selectedTime, setSelectedTime] = useState('');
 
-  const recommendedDates = useMemo(
-    () => getRecommendedDates(currentYear, currentMonth),
-    [currentYear, currentMonth]
-  );
+  const allRecommendedDates = useMemo(() => {
+    const dates: Date[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const possibleOffsets = Array.from({ length: 30 }, (_, i) => i + 1);
+
+    for (let i = 0; i < 4; i++) {
+      const randIdx = Math.floor(Math.random() * possibleOffsets.length);
+      const offset = possibleOffsets.splice(randIdx, 1)[0];
+      const d = new Date(today);
+      d.setDate(today.getDate() + offset);
+      dates.push(d);
+    }
+    return dates;
+  }, []);
+
+  const recommendedDates = useMemo(() => {
+    return allRecommendedDates
+      .filter(d => d.getMonth() === currentMonth && d.getFullYear() === currentYear)
+      .map(d => d.getDate());
+  }, [allRecommendedDates, currentMonth, currentYear]);
 
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -50,14 +58,13 @@ export default function SchedulePage() {
     return days;
   }, [firstDayOfMonth, daysInMonth]);
 
-  // Only allow today and tomorrow
   const isTomorrow = (day: number) => {
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     return day === tomorrow.getDate() && currentMonth === tomorrow.getMonth() && currentYear === tomorrow.getFullYear();
   };
 
-  const isAllowedDate = (day: number) => isToday(day) || isTomorrow(day);
+  const isAllowedDate = (day: number) => isToday(day) || isTomorrow(day) || recommendedDates.includes(day);
 
   const prevMonth = () => {
     if (currentMonth === 0) {
@@ -170,6 +177,11 @@ export default function SchedulePage() {
                 {isTomorrow(day) && !isSel && (
                   <span className="text-[8px] text-primary font-medium leading-none mb-0.5">
                     Besok
+                  </span>
+                )}
+                {isRec && !isSel && !isTod && !isTomorrow(day) && (
+                  <span className="text-[8px] text-state-success font-medium leading-none mb-0.5">
+                    Rekomendasi
                   </span>
                 )}
                 <span className={`text-sm font-medium ${isSel ? 'text-white font-bold' : 'text-text-primary'

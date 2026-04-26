@@ -27,7 +27,7 @@
   --color-overlay: rgba(0, 0, 0, 0.4);
 
   /* Shadows */
-  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.14);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
 
   /* Border Radius */
@@ -196,7 +196,7 @@ select {
   padding-right: 20px;
 }
 
-/* Full-page dashboard gradient (soft blue → white) */
+/* Full-page dashboard gradient */
 .gradient-dashboard {
-  background: linear-gradient(180deg, #A8DCFA 0%, #7DBCF5 18%, #9ECDF8 45%, #D4E6FC 70%, #F4F7FF 100%);
+  background: linear-gradient(45deg, #3A8EF2 0%, #7DD4F7 30%, #D6EDFB 50%, #7DD4F7 70%, #3A8EF2 100%);
 }

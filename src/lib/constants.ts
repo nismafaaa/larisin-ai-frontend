@@ -26,14 +26,14 @@ export const BRAND_COLORS = [
 
 // ==================== Platforms ====================
 export const PLATFORMS = [
-  { id: 'instagram', label: 'Instagram', icon: '📸' },
-  { id: 'tiktok', label: 'TikTok', icon: '🎵' },
-  { id: 'whatsapp', label: 'WhatsApp', icon: '💬' },
-  { id: 'facebook', label: 'Facebook', icon: '👤' },
-  { id: 'shopee', label: 'Shopee/Tokopedia', icon: '🛒' },
-  { id: 'gofood', label: 'GoFood/GrabFood', icon: '🍽️' },
-  { id: 'toko', label: 'Toko/Outlet', icon: '🏪' },
-  { id: 'none', label: 'Belum jual online', icon: '📵' },
+  { id: 'instagram', label: 'Instagram', icon: '/social-media/instagram.png' },
+  { id: 'tiktok', label: 'TikTok', icon: '/social-media/tiktok-shop.png' },
+  { id: 'whatsapp', label: 'WhatsApp', icon: '/social-media/whatsapp.png' },
+  { id: 'facebook', label: 'Facebook', icon: '/social-media/facebook.png' },
+  { id: 'shopee', label: 'Shopee/Tokopedia', icon: '/social-media/shopee-tokopedia.png' },
+  { id: 'gofood', label: 'GoFood/GrabFood', icon: '/social-media/gofood-grabfood.png' },
+  { id: 'toko', label: 'Toko/Outlet', icon: '/social-media/toko-outlet.png' },
+  { id: 'none', label: 'Belum jual online', icon: '/social-media/belum-jual-online.png' },
 ];
 
 // ==================== Needs ====================
@@ -109,11 +109,4 @@ export const NEWS_ARTICLES = [
     source: 'UMKM News',
     color: '#5B6DFF',
   },
-];
-
-// ==================== Lokasi Options ====================
-export const LOKASI_OPTIONS = [
-  'Jakarta', 'Bandung', 'Surabaya', 'Yogyakarta', 'Semarang',
-  'Medan', 'Makassar', 'Malang', 'Denpasar', 'Palembang',
-  'Solo', 'Bekasi', 'Tangerang', 'Depok', 'Bogor',
 ];

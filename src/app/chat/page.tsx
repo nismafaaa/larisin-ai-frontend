@@ -50,7 +50,6 @@ export default function ChatPage() {
 
   useEffect(() => {
     resetChat();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +119,7 @@ export default function ChatPage() {
   return (
     <MobileLayout noPadding className="!bg-white">
       {/* Header */}
-      <div className="gradient-header px-5 pb-4 pt-6 safe-top flex items-center gap-3">
+      <div className="gradient-header px-5 pb-4 pt-6 safe-top rounded-b-3xl flex items-center gap-3">
         <button
           onClick={() => router.push('/dashboard')}
           className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
@@ -326,11 +325,10 @@ export default function ChatPage() {
                 <button
                   key={f.id}
                   onClick={() => { if (currentStep === 'focus-select') setFocusSelection(f.id); }}
-                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
-                    focusSelection === f.id
+                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${focusSelection === f.id
                       ? 'bg-primary text-white shadow-md'
                       : 'bg-white border border-neutral-border text-text-primary'
-                  } ${pastStep('focus-select') ? 'opacity-60' : ''}`}
+                    } ${pastStep('focus-select') ? 'opacity-60' : ''}`}
                 >
                   {f.label}
                 </button>
@@ -353,11 +351,10 @@ export default function ChatPage() {
                 <button
                   key={idx}
                   onClick={() => { if (currentStep === 'caption-display') { setSelectedCaption(caption); setSelectedHashtags(hashtags); } }}
-                  className={`w-full text-left p-4 rounded-xl text-xs leading-relaxed transition-all ${
-                    selectedCaption === caption
+                  className={`w-full text-left p-4 rounded-xl text-xs leading-relaxed transition-all ${selectedCaption === caption
                       ? 'bg-accent-chat border-2 border-primary'
                       : 'bg-white border-2 border-neutral-border/50'
-                  } ${pastStep('caption-display') ? 'opacity-60' : 'hover:border-primary/50'}`}
+                    } ${pastStep('caption-display') ? 'opacity-60' : 'hover:border-primary/50'}`}
                 >
                   <p className="font-semibold text-text-secondary mb-1.5">Opsi {idx + 1}</p>
                   <p className="text-text-primary">{caption}</p>

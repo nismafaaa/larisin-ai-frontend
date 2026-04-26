@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Check } from 'lucide-react';
 
 interface PlatformCardProps {
@@ -31,7 +32,11 @@ export default function PlatformCard({
           <Check className="w-3 h-3 text-white" />
         </span>
       )}
-      <span className="text-3xl">{icon}</span>
+      {icon.startsWith('/') ? (
+        <Image src={icon} alt={label} width={36} height={36} className="object-contain" />
+      ) : (
+        <span className="text-3xl">{icon}</span>
+      )}
       <span className="text-xs font-medium text-text-primary text-center leading-tight">{label}</span>
     </button>
   );

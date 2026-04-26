@@ -11,8 +11,8 @@ import { NEWS_ARTICLES } from '@/lib/constants';
 
 function getNameFromEmail(email?: string): string {
   if (!email) return 'Pengguna';
-  const local = email.split('@')[0]; // e.g. "mawar.shop"
-  const first = local.split(/[._-]/)[0]; // take first word
+  const local = email.split('@')[0];
+  const first = local.split(/[._-]/)[0];
   return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
 }
 
@@ -37,13 +37,18 @@ export default function DashboardPage() {
               onClick={() => router.push('/profile')}
               className="w-14 h-14 rounded-full bg-white/20 border-2 border-white/30 shadow-lg flex items-center justify-center overflow-hidden backdrop-blur-sm flex-shrink-0"
             >
-              <span className="text-2xl">👤</span>
+              {user?.avatar ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-2xl">👤</span>
+              )}
             </button>
             <div>
-              <h1 className="text-[22px] font-bold text-white leading-tight">
+              <h1 className="text-[22px] font-bold text-black leading-tight">
                 Halo, {displayName}!
               </h1>
-              <p className="text-sm text-white/70 mt-0.5">
+              <p className="text-sm text-black/60 mt-0.5">
                 Selamat datang di LarisinAi <span className="text-yellow-300">✨</span>
               </p>
             </div>
@@ -54,7 +59,7 @@ export default function DashboardPage() {
         <div className="px-6 pb-10">
           {/* Create Photo Section */}
           <div className="mb-7">
-            <h3 className="text-[17px] font-bold text-white mb-3">
+            <h3 className="text-[17px] font-bold text-black mb-3">
               🎨 Kreasikan Foto Produkmu!
             </h3>
             <Card className="p-5 min-h-[120px] flex flex-col justify-between">
@@ -73,7 +78,7 @@ export default function DashboardPage() {
 
           {/* Schedule Section */}
           <div className="mb-7">
-            <h3 className="text-[17px] font-bold text-white mb-3">
+            <h3 className="text-[17px] font-bold text-black mb-3">
               📅 Lihat Jadwal Promosimu!
             </h3>
             <Card className="p-5 min-h-[110px] flex flex-col justify-between">
@@ -82,8 +87,7 @@ export default function DashboardPage() {
                   <p className="text-sm text-text-secondary mb-1">
                     Selasa · {nextSchedule.date}
                   </p>
-                  <p className="text-2xl font-bold text-text-primary">{nextSchedule.time}</p>
-                  <p className="text-sm text-text-secondary mt-0.5">WIB</p>
+                  <p className="text-2xl font-bold text-text-primary">{nextSchedule.time} <span className="text-sm font-normal text-text-secondary">WIB</span></p>
                   <p className="text-[15px] font-semibold text-text-primary mt-2">{nextSchedule.title}</p>
                 </div>
               ) : (
@@ -91,9 +95,16 @@ export default function DashboardPage() {
                   <p className="text-lg font-bold text-text-primary mb-1">
                     Belum ada jadwal
                   </p>
-                  <p className="text-[15px] text-text-secondary">
+                  <p className="text-[15px] text-text-secondary mb-3">
                     Jadwalkan posting kontenmu disini
                   </p>
+                  <Button
+                    size="sm"
+                    onClick={() => router.push('/chat')}
+                    className="self-start"
+                  >
+                    ✨ Buat Konten dengan AI
+                  </Button>
                 </div>
               )}
               <Button
@@ -108,7 +119,7 @@ export default function DashboardPage() {
 
           {/* News Section */}
           <div className="mb-4">
-            <h3 className="text-[17px] font-bold text-white mb-3">
+            <h3 className="text-[17px] font-bold text-black mb-3">
               📰 Informasi Terkini
             </h3>
             <div className="flex flex-col gap-3">

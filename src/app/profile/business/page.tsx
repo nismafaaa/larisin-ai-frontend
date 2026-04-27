@@ -267,6 +267,7 @@ function BusinessDataContent() {
                 label={item.label}
                 selected={platformIds.includes(item.id)}
                 onClick={() => toggleMulti(item.id, platformIds, setPlatformIds)}
+                prominent={item.id === 'shopee' || item.id === 'gofood'}
               />
             ))}
           </div>
@@ -297,6 +298,7 @@ function BusinessDataContent() {
                 key={item.id}
                 emoji={item.emoji}
                 label={item.label}
+                example={'example' in item ? item.example : undefined}
                 selected={gayaId === item.id}
                 onClick={() => setGayaId(item.id)}
               />

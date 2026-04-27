@@ -47,11 +47,11 @@ export const NEEDS = [
 
 // ==================== Promotion Styles ====================
 export const PROMO_STYLES = [
-  { id: 'santai', label: 'Santai & ngobrol', emoji: '😄' },
-  { id: 'profesional', label: 'Profesional & rapi', emoji: '💼' },
-  { id: 'promo', label: 'Promo & diskon', emoji: '🔥' },
-  { id: 'ramah', label: 'Ramah & hangat', emoji: '🧡' },
-  { id: 'lucu', label: 'Lucu & menarik', emoji: '😂' },
+  { id: 'santai', label: 'Santai seperti ngobrol', emoji: '😄', example: 'Contoh: "Lagi laper? Yuk cobain ini!"' },
+  { id: 'profesional', label: 'Rapi dan profesional', emoji: '💼', example: 'Contoh: "Produk berkualitas, harga terbaik"' },
+  { id: 'promo', label: 'Fokus jualan dan promosi', emoji: '🔥', example: 'Contoh: "Diskon hari ini, buruan order!"' },
+  { id: 'ramah', label: 'Ramah dan hangat', emoji: '🧡', example: 'Contoh: "Dibuat dengan kasih sayang"' },
+  { id: 'lucu', label: 'Lucu dan menarik perhatian', emoji: '😂', example: 'Contoh: "Awas ketagihan!"' },
 ];
 
 // ==================== Content Ratios ====================

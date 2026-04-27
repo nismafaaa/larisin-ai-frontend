@@ -52,6 +52,7 @@ export default function StylePage() {
             key={item.id}
             emoji={item.emoji}
             label={item.label}
+            example={'example' in item ? item.example : undefined}
             selected={selected === item.id}
             onClick={() => setSelected(item.id)}
           />

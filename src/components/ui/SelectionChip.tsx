@@ -6,6 +6,7 @@ import { Check } from 'lucide-react';
 interface SelectionChipProps {
   label: string;
   emoji?: string;
+  example?: string;
   selected: boolean;
   onClick: () => void;
   className?: string;
@@ -14,6 +15,7 @@ interface SelectionChipProps {
 export default function SelectionChip({
   label,
   emoji,
+  example,
   selected,
   onClick,
   className = '',
@@ -28,7 +30,10 @@ export default function SelectionChip({
         } ${className}`}
     >
       {emoji && <span className="text-2xl flex-shrink-0">{emoji}</span>}
-      <span className="flex-1 font-semibold text-text-primary text-[15px]">{label}</span>
+      <div className="flex-1 flex flex-col items-start text-left">
+        <span className="font-semibold text-text-primary text-[15px]">{label}</span>
+        {example && <span className="text-[13px] text-text-secondary mt-0.5">{example}</span>}
+      </div>
       {selected && (
         <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary flex items-center justify-center">
           <Check className="w-4 h-4 text-white" />

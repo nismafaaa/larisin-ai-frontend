@@ -47,6 +47,7 @@ export default function PlatformPage() {
             label={item.label}
             selected={selected.includes(item.id)}
             onClick={() => togglePlatform(item.id)}
+            prominent={item.id === 'shopee' || item.id === 'gofood'}
           />
         ))}
       </div>

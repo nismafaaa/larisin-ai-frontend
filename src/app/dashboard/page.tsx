@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import MobileLayout from '@/components/layout/MobileLayout';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -57,22 +58,49 @@ export default function DashboardPage() {
 
         {/* Content Sections */}
         <div className="px-6 pb-10">
+          {/* Video Tutorial Section */}
+          <div className="mb-7">
+            <h3 className="text-[17px] font-bold text-black mb-3">
+              📹 Belajar LarisinAi
+            </h3>
+            <Card className="p-0 overflow-hidden relative group cursor-pointer shadow-card">
+              <div className="h-[140px] w-full bg-gradient-to-br from-primary-main to-accent-light relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-lg transition-transform group-hover:scale-105">
+                    <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                  <h4 className="text-white font-bold text-[15px] drop-shadow-md leading-tight">Cara Pakai LarisinAi</h4>
+                  <p className="text-white/90 text-[13px] drop-shadow-md mt-0.5">Tonton video tutorial 1 menit ini</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
           {/* Create Photo Section */}
           <div className="mb-7">
             <h3 className="text-[17px] font-bold text-black mb-3">
               🎨 Kreasikan Foto Produkmu!
             </h3>
-            <Card className="p-5 min-h-[120px] flex flex-col justify-between">
-              <p className="text-[15px] text-text-secondary mb-4">
-                Buat foto produk profesional dengan bantuan AI
-              </p>
-              <Button
-                size="sm"
-                onClick={() => router.push('/chat')}
-                className="self-start"
-              >
-                Coba sekarang!
-              </Button>
+            <Card className="p-0 overflow-hidden min-h-[140px]">
+              <div className="flex justify-between items-stretch h-full">
+                <div className="p-4 sm:p-5 flex flex-col justify-center flex-1 pr-2">
+                  <p className="text-[14px] sm:text-[15px] text-text-secondary mb-4 leading-snug">
+                    Buat foto produk profesional dengan bantuan AI
+                  </p>
+                  <Button
+                    size="sm"
+                    onClick={() => router.push('/chat')}
+                    className="self-start text-[13px] sm:text-sm"
+                  >
+                    Coba sekarang!
+                  </Button>
+                </div>
+                <div className="w-[45%] relative flex-shrink-0 bg-transparent flex items-center justify-center p-3">
+                  <Image src="/dashboard-component/card-image-gen.png" alt="AI Image Generation" width={160} height={160} className="object-contain w-full h-full" />
+                </div>
+              </div>
             </Card>
           </div>
 
@@ -81,39 +109,46 @@ export default function DashboardPage() {
             <h3 className="text-[17px] font-bold text-black mb-3">
               📅 Lihat Jadwal Promosimu!
             </h3>
-            <Card className="p-5 min-h-[110px] flex flex-col justify-between">
-              {nextSchedule ? (
-                <div>
-                  <p className="text-sm text-text-secondary mb-1">
-                    Selasa · {nextSchedule.date}
-                  </p>
-                  <p className="text-2xl font-bold text-text-primary">{nextSchedule.time} <span className="text-sm font-normal text-text-secondary">WIB</span></p>
-                  <p className="text-[15px] font-semibold text-text-primary mt-2">{nextSchedule.title}</p>
+            <Card className="p-0 overflow-hidden min-h-[140px]">
+              <div className="flex justify-between items-stretch h-full">
+                <div className="p-4 sm:p-5 flex flex-col justify-center flex-1 pr-2">
+                  {nextSchedule ? (
+                    <div className="flex flex-col justify-center h-full">
+                      <p className="text-[13px] sm:text-sm text-text-secondary mb-1">
+                        Selasa · {nextSchedule.date}
+                      </p>
+                      <p className="text-xl sm:text-2xl font-bold text-text-primary leading-tight">{nextSchedule.time} <span className="text-[12px] sm:text-sm font-normal text-text-secondary">WIB</span></p>
+                      <p className="text-[14px] sm:text-[15px] font-semibold text-text-primary mt-1 line-clamp-2">{nextSchedule.title}</p>
+                      <Button
+                        size="sm"
+                        onClick={() => router.push('/schedule/view')}
+                        className="self-start mt-3 text-[13px] sm:text-sm"
+                      >
+                        Lihat Jadwal
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="py-1 flex flex-col justify-center h-full">
+                      <p className="text-[15px] sm:text-lg font-bold text-text-primary mb-1">
+                        Belum ada jadwal
+                      </p>
+                      <p className="text-[13px] sm:text-[15px] text-text-secondary mb-3 leading-snug">
+                        Jadwalkan posting kontenmu disini
+                      </p>
+                      <Button
+                        size="sm"
+                        onClick={() => router.push('/chat')}
+                        className="self-start text-[13px] sm:text-sm"
+                      >
+                        ✨ Buat Konten
+                      </Button>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="py-1">
-                  <p className="text-lg font-bold text-text-primary mb-1">
-                    Belum ada jadwal
-                  </p>
-                  <p className="text-[15px] text-text-secondary mb-3">
-                    Jadwalkan posting kontenmu disini
-                  </p>
-                  <Button
-                    size="sm"
-                    onClick={() => router.push('/chat')}
-                    className="self-start"
-                  >
-                    ✨ Buat Konten dengan AI
-                  </Button>
+                <div className="w-[45%] relative flex-shrink-0 bg-transparent flex items-center justify-center p-3">
+                  <Image src="/dashboard-component/card-calendar.png" alt="Calendar" width={160} height={160} className="object-contain w-full h-full" />
                 </div>
-              )}
-              <Button
-                size="sm"
-                onClick={() => router.push('/schedule/view')}
-                className="self-start mt-4"
-              >
-                Lihat Jadwal
-              </Button>
+              </div>
             </Card>
           </div>
 

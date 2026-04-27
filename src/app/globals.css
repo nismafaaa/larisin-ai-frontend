@@ -64,15 +64,15 @@ body {
 
 /* Gradient backgrounds */
 .gradient-brand {
-  background: linear-gradient(180deg, #69D1F4 0%, #4E8FF3 30%, #5B6DFF 100%);
+  background: linear-gradient(180deg, #69D1F4 0%, #2765F0 100%);
 }
 
 .gradient-header {
-  background: linear-gradient(135deg, #69D1F4 0%, #4E8FF3 50%, #5B6DFF 100%);
+  background: linear-gradient(135deg, #69D1F4 0%, #2765F0 100%);
 }
 
 .gradient-splash {
-  background: radial-gradient(ellipse at center, #4E8FF3 0%, #69D1F4 60%, #69D1F4 100%);
+  background: radial-gradient(ellipse at center, #2765F0 0%, #2765F0 60%, #69D1F4 100%);
 }
 
 /* Selection chip states */
@@ -198,5 +198,5 @@ select {
 
 /* Full-page dashboard gradient */
 .gradient-dashboard {
-  background: linear-gradient(45deg, #3A8EF2 0%, #7DD4F7 30%, #D6EDFB 50%, #7DD4F7 70%, #3A8EF2 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #69D1F4 100%);
 }

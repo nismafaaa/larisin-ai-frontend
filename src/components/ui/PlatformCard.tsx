@@ -9,6 +9,7 @@ interface PlatformCardProps {
   label: string;
   selected: boolean;
   onClick: () => void;
+  prominent?: boolean;
 }
 
 export default function PlatformCard({
@@ -16,14 +17,19 @@ export default function PlatformCard({
   label,
   selected,
   onClick,
+  prominent,
 }: PlatformCardProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl transition-all duration-200 active:scale-95 relative ${
+      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl transition-all duration-200 active:scale-95 relative z-10 ${
+        prominent && !selected ? 'shadow-md scale-[1.02] bg-gradient-to-br from-white to-accent-chat/30 border-2 border-primary/30' : ''
+      } ${
         selected
           ? 'bg-accent-light/30 border-2 border-accent-light shadow-sm'
+          : prominent
+          ? ''
           : 'bg-neutral-card border-2 border-transparent hover:border-neutral-border'
       }`}
     >
@@ -33,11 +39,11 @@ export default function PlatformCard({
         </span>
       )}
       {icon.startsWith('/') ? (
-        <Image src={icon} alt={label} width={36} height={36} className="object-contain" />
+        <Image src={icon} alt={label} width={prominent ? 44 : 36} height={prominent ? 44 : 36} className="object-contain drop-shadow-sm" />
       ) : (
-        <span className="text-3xl">{icon}</span>
+        <span className={`${prominent ? 'text-4xl drop-shadow-sm' : 'text-3xl'}`}>{icon}</span>
       )}
-      <span className="text-xs font-medium text-text-primary text-center leading-tight">{label}</span>
+      <span className={`text-xs font-medium text-center leading-tight ${prominent ? 'text-[13px] font-bold text-primary-dark' : 'text-text-primary'}`}>{label}</span>
     </button>
   );
 }

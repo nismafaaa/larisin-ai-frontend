@@ -13,7 +13,7 @@ export const aiService = {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     return {
       job_id: 'mock_job_' + Date.now(),
-      result_image_url: '/placeholder-result.png',
+      result_image_url: '/nastar-enhanced.png',
       message: 'Gambar berhasil dibuat',
     };
   },

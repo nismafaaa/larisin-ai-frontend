@@ -30,11 +30,12 @@ export default function SchedulePage() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const possibleOffsets = Array.from({ length: 30 }, (_, i) => i + 1);
-
-    for (let i = 0; i < 4; i++) {
-      const randIdx = Math.floor(Math.random() * possibleOffsets.length);
-      const offset = possibleOffsets.splice(randIdx, 1)[0];
+    // 4 random dates within a 2-week range from today
+    const offsets = new Set<number>();
+    while (offsets.size < 4) {
+      offsets.add(Math.floor(Math.random() * 14) + 1);
+    }
+    for (const offset of Array.from(offsets)) {
       const d = new Date(today);
       d.setDate(today.getDate() + offset);
       dates.push(d);
@@ -64,7 +65,12 @@ export default function SchedulePage() {
     return day === tomorrow.getDate() && currentMonth === tomorrow.getMonth() && currentYear === tomorrow.getFullYear();
   };
 
-  const isAllowedDate = (day: number) => isToday(day) || isTomorrow(day) || recommendedDates.includes(day);
+  const isAllowedDate = (day: number) => {
+    const dateToCheck = new Date(currentYear, currentMonth, day);
+    const todayDate = new Date(today);
+    todayDate.setHours(0, 0, 0, 0);
+    return dateToCheck >= todayDate;
+  };
 
   const prevMonth = () => {
     if (currentMonth === 0) {
@@ -130,14 +136,20 @@ export default function SchedulePage() {
           Pilih tanggal upload!
         </h2>
         <p className="text-sm text-text-secondary mb-6">
-          Kamu hanya bisa memilih hari ini atau besok
+          Pilih tanggal yang sesuai untuk posting kontenmu
         </p>
 
-        {/* Month label (no navigation — only today/tomorrow) */}
+        {/* Month Navigation */}
         <div className="flex items-center justify-between mb-5">
+          <button onClick={prevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-neutral-border/50 text-text-primary font-bold">
+            &lt;
+          </button>
           <h3 className="text-lg font-bold text-text-primary">
             {MONTHS[currentMonth]} {currentYear}
           </h3>
+          <button onClick={nextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-neutral-border/50 text-text-primary font-bold">
+            &gt;
+          </button>
         </div>
 
         {/* Calendar Grid */}
@@ -174,12 +186,7 @@ export default function SchedulePage() {
                     Hari Ini
                   </span>
                 )}
-                {isTomorrow(day) && !isSel && (
-                  <span className="text-[8px] text-primary font-medium leading-none mb-0.5">
-                    Besok
-                  </span>
-                )}
-                {isRec && !isSel && !isTod && !isTomorrow(day) && (
+                {isRec && !isSel && !isTod && (
                   <span className="text-[8px] text-state-success font-medium leading-none mb-0.5">
                     Rekomendasi
                   </span>

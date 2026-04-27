@@ -198,5 +198,8 @@ select {
 
 /* Full-page dashboard gradient */
 .gradient-dashboard {
-  background: linear-gradient(135deg, #FFFFFF 0%, #69D1F4 100%);
+  background:
+    radial-gradient(circle at top right, rgba(39, 101, 240, 0.8) 0%, rgba(39, 101, 240, 0) 45%),
+    radial-gradient(circle at bottom left, rgba(39, 101, 240, 0.8) 0%, rgba(39, 101, 240, 0) 45%),
+    linear-gradient(135deg, #FFFFFF 0%, #69D1F4 100%);
 }

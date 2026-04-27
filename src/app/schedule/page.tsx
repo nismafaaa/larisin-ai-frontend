@@ -30,7 +30,6 @@ export default function SchedulePage() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // 4 random dates within a 2-week range from today
     const offsets = new Set<number>();
     while (offsets.size < 4) {
       offsets.add(Math.floor(Math.random() * 14) + 1);
@@ -59,12 +58,6 @@ export default function SchedulePage() {
     return days;
   }, [firstDayOfMonth, daysInMonth]);
 
-  const isTomorrow = (day: number) => {
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    return day === tomorrow.getDate() && currentMonth === tomorrow.getMonth() && currentYear === tomorrow.getFullYear();
-  };
-
   const isAllowedDate = (day: number) => {
     const dateToCheck = new Date(currentYear, currentMonth, day);
     const todayDate = new Date(today);
@@ -73,13 +66,18 @@ export default function SchedulePage() {
   };
 
   const prevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
+    const targetDate = new Date(currentYear, currentMonth - 1, 1);
+    const actualCurrentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    if (targetDate >= actualCurrentMonthStart) {
+      if (currentMonth === 0) {
+        setCurrentMonth(11);
+        setCurrentYear(currentYear - 1);
+      } else {
+        setCurrentMonth(currentMonth - 1);
+      }
+      setSelectedDate(null);
     }
-    setSelectedDate(null);
   };
 
   const nextMonth = () => {
@@ -141,7 +139,11 @@ export default function SchedulePage() {
 
         {/* Month Navigation */}
         <div className="flex items-center justify-between mb-5">
-          <button onClick={prevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-neutral-border/50 text-text-primary font-bold">
+          <button
+            onClick={prevMonth}
+            disabled={new Date(currentYear, currentMonth - 1, 1) < new Date(today.getFullYear(), today.getMonth(), 1)}
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-neutral-border/50 text-text-primary font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+          >
             &lt;
           </button>
           <h3 className="text-lg font-bold text-text-primary">

@@ -39,7 +39,6 @@ export default function DashboardPage() {
               className="w-14 h-14 rounded-full bg-white/20 border-2 border-white/30 shadow-lg flex items-center justify-center overflow-hidden backdrop-blur-sm flex-shrink-0"
             >
               {user?.avatar ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-2xl">👤</span>
@@ -60,19 +59,17 @@ export default function DashboardPage() {
         <div className="px-6 pb-10">
           {/* Video Tutorial Section */}
           <div className="mb-7">
-            <h3 className="text-[17px] font-bold text-black mb-3">
-              📹 Belajar LarisinAi
-            </h3>
-            <Card className="p-0 overflow-hidden relative group cursor-pointer shadow-card">
-              <div className="h-[140px] w-full bg-gradient-to-br from-primary-main to-accent-light relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center shadow-lg transition-transform group-hover:scale-105">
-                    <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1" />
-                  </div>
+            <Card className="p-0 overflow-hidden relative group cursor-pointer shadow-card bg-[#4A4A4A]">
+              <div className="h-[140px] w-full flex items-center justify-center relative">
+                {/* Background Logo */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-60">
+                  <Image src="/logo/logo-splash.png" alt="Larisin AI" width={180} height={70} className="object-contain" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
-                  <h4 className="text-white font-bold text-[15px] drop-shadow-md leading-tight">Cara Pakai LarisinAi</h4>
-                  <p className="text-white/90 text-[13px] drop-shadow-md mt-0.5">Tonton video tutorial 1 menit ini</p>
+                {/* Play Button */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-105">
+                    <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-primary-main border-b-[8px] border-b-transparent ml-1" />
+                  </div>
                 </div>
               </div>
             </Card>

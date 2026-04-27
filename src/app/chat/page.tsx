@@ -14,7 +14,6 @@ import { CONTENT_RATIOS, EDIT_FUNCTIONS } from '@/lib/constants';
 import { Upload, ChevronLeft } from 'lucide-react';
 import type { ChatStep } from '@/types';
 
-// Radio Icon Helper
 const RadioIcon = ({ checked }: { checked: boolean }) => {
   if (checked) {
     return (
@@ -39,7 +38,7 @@ export default function ChatPage() {
     setSelectedImage, selectedImageUrl,
     resultImageUrl, setResultImageUrl,
     selectedCaption, setSelectedCaption,
-    hashtags, setSelectedHashtags,
+    selectedHashtags, setSelectedHashtags,
     retryCountImage, incrementRetryImage,
     retryCountCaption, incrementRetryCaption,
     resetChat,
@@ -113,7 +112,7 @@ export default function ChatPage() {
     try {
       const result = await aiService.generateCaption({
         image_url: resultImageUrl,
-        fokus_promosi: '', 
+        fokus_promosi: '',
         business_jenis: profile.jenis_bisnis,
         business_target: profile.target_pembeli,
         business_gaya_promosi: profile.gaya_promosi,
@@ -157,7 +156,7 @@ export default function ChatPage() {
         <ChatBubble role="ai">
           <p className="font-semibold mb-1">Hai {user?.name || 'Mawar'}! 👋</p>
           <p className="mb-4">Aku sudah rangkum bisnismu ya, coba dicek dulu 😊</p>
-          
+
           <div className="bg-neutral-card/50 rounded-xl p-3 mb-4 text-xs">
             <p className="font-medium mb-2 flex items-center gap-1.5">📊 Data Bisnis Kamu</p>
             <ul className="space-y-1.5 text-text-secondary">
@@ -169,9 +168,9 @@ export default function ChatPage() {
               <li className="flex gap-2"><span className="w-4 text-center">🎨</span> <span>Warna Brand: <span className="font-medium text-text-primary">{profile.warna_utama_brand || '-'}</span></span></li>
             </ul>
           </div>
-          
+
           <p className="font-medium mb-3">Sudah sesuai, atau mau diubah dulu?</p>
-          
+
           {currentStep === 'profile-review' ? (
             <div className="space-y-3">
               <label className="flex items-center gap-3 cursor-pointer">
@@ -293,10 +292,10 @@ export default function ChatPage() {
                 {currentStep === 'upload' ? (
                   <div className="p-3 pb-1">
                     <p className="text-[13px] text-text-secondary mb-2 leading-relaxed">
-                      Ada yang mau ditambahkan? (boleh dikosongkan)<br/>
-                      Contoh:<br/>
-                      - background putih / estetik<br/>
-                      - tulisan promo potongan harga<br/>
+                      Ada yang mau ditambahkan? (boleh dikosongkan)<br />
+                      Contoh:<br />
+                      - background putih / estetik<br />
+                      - tulisan promo potongan harga<br />
                       - tambahkan gambar bunga
                     </p>
                     <textarea
@@ -355,7 +354,7 @@ export default function ChatPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={resultImageUrl} alt="Hasil gambar AI" className="w-full max-h-64 object-contain" />
             </div>
-            
+
             <p className="font-semibold mb-3">Sudah sesuai, atau mau diperbaiki?</p>
             {currentStep === 'result-review' ? (
               <div className="space-y-3">
@@ -442,8 +441,8 @@ export default function ChatPage() {
 
                 {currentStep === 'caption-display' && (
                   <>
-                    <Button 
-                      fullWidth 
+                    <Button
+                      fullWidth
                       className={`mb-4 transition-colors ${!selectedCaption ? '!bg-gray-500 hover:!bg-gray-500 opacity-90' : ''}`}
                       onClick={() => {
                         if (selectedCaption) advanceStep('schedule-prompt');
@@ -455,15 +454,15 @@ export default function ChatPage() {
                     {retryCountCaption < 1 && (
                       <div className="pt-3 border-t border-neutral-border/50">
                         <p className="font-semibold mb-3">Mau coba caption lain?</p>
-                        <Button 
-                          fullWidth 
+                        <Button
+                          fullWidth
                           className="mb-4 !bg-gray-500 hover:!bg-gray-600"
                           onClick={() => { incrementRetryCaption(); setCaptions([]); setSelectedCaption(''); handleGenerateCaption(); }}
                         >
                           Buat ulang
                         </Button>
                         <div className="text-xs text-text-secondary leading-snug">
-                          <span className="font-bold text-text-primary">Catatan:</span><br/>
+                          <span className="font-bold text-text-primary">Catatan:</span><br />
                           Kamu hanya bisa buat ulang caption sekali lagi ya 😉
                         </div>
                       </div>

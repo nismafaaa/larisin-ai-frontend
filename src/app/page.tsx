@@ -22,15 +22,15 @@ export default function SplashScreen() {
         } else {
           router.replace('/signin');
         }
-      }, 500);
+      }, 400);
     }, 2000);
     return () => clearTimeout(timer);
   }, [isAuthenticated, isOnboarded, router]);
 
   return (
-    <div className="min-h-dvh flex justify-center bg-gray-100">
+    <div className="min-h-dvh flex justify-center" style={{ background: '#2765F0' }}>
       <div
-        className={`relative w-full max-w-[430px] min-h-dvh flex flex-col items-center justify-center gradient-splash transition-opacity duration-500 shadow-2xl ${
+        className={`relative w-full max-w-[430px] min-h-dvh flex flex-col items-center justify-center gradient-splash shadow-2xl transition-opacity duration-400 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -40,6 +40,7 @@ export default function SplashScreen() {
             alt="LarisinAi — AI untuk UMKM, Jualan Makin Laris!"
             width={280}
             height={100}
+            style={{ width: 'auto', height: 'auto', maxWidth: '280px' }}
             className="object-contain"
             priority
           />

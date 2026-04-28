@@ -155,7 +155,7 @@ export default function SchedulePage() {
         </div>
 
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-1.5 mb-6">
+        <div className="grid grid-cols-7 gap-y-1 mb-6">
           {DAYS.map((day) => (
             <div key={day} className="text-center py-2">
               <span className={`text-xs font-semibold ${day === 'Min' ? 'text-state-error' : 'text-text-secondary'}`}>
@@ -168,39 +168,46 @@ export default function SchedulePage() {
             const isRec = recommendedDates.includes(day);
             const isSel = selectedDate === day;
             const isTod = isToday(day);
+            const allowed = isAllowedDate(day);
 
             return (
-              <button
-                key={day}
-                onClick={() => handleDateSelect(day)}
-                disabled={!isAllowedDate(day)}
-                className={`flex flex-col items-center py-2 rounded-xl transition-all ${isSel
-                  ? 'bg-accent-light text-white'
-                  : isTod
-                    ? 'bg-primary/10'
-                    : !isAllowedDate(day)
-                      ? 'opacity-30 cursor-not-allowed'
-                      : ''
+              <div key={day} className="flex flex-col items-center py-0.5">
+                {/* Label row — fixed height to keep circles aligned */}
+                <div className="h-4 flex items-center justify-center mb-0.5">
+                  {isTod && (
+                    <span className="text-[9px] text-state-error font-semibold leading-none">
+                      Hari Ini
+                    </span>
+                  )}
+                  {isRec && !isSel && !isTod && (
+                    <span className="text-[9px] text-state-success font-semibold leading-none">
+                      Terbaik!
+                    </span>
+                  )}
+                </div>
+                {/* Circle button */}
+                <button
+                  onClick={() => handleDateSelect(day)}
+                  disabled={!allowed}
+                  className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+                    isSel
+                      ? 'bg-accent-light text-white shadow-md'
+                      : isTod
+                        ? 'bg-primary/10 text-primary'
+                        : !allowed
+                          ? 'opacity-30 cursor-not-allowed'
+                          : 'hover:bg-neutral-border/60'
                   }`}
-              >
-                {isTod && (
-                  <span className="text-[8px] text-state-error font-medium leading-none mb-0.5">
-                    Hari Ini
+                >
+                  <span className={`text-sm font-medium ${isSel ? 'text-white font-bold' : 'text-text-primary'}`}>
+                    {day}
                   </span>
-                )}
-                {isRec && !isSel && !isTod && (
-                  <span className="text-[8px] text-state-success font-medium leading-none mb-0.5">
-                    Rekomendasi
-                  </span>
-                )}
-                <span className={`text-sm font-medium ${isSel ? 'text-white font-bold' : 'text-text-primary'
-                  }`}>
-                  {day}
-                </span>
-              </button>
+                </button>
+              </div>
             );
           })}
         </div>
+
 
         <Button
           fullWidth

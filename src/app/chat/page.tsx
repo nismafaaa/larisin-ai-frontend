@@ -65,6 +65,14 @@ export default function ChatPage() {
     resetChat();
   }, []);
 
+  useEffect(() => {
+    if (currentStep === 'ratio-intro') {
+      const t = setTimeout(() => {
+        advanceStep('ratio-select', 800);
+      }, 400);
+      return () => clearTimeout(t);
+    }
+  }, [currentStep]);
   const advanceStep = (next: ChatStep, delay = 600) => {
     setIsTyping(true);
     scrollToBottom();
@@ -128,7 +136,7 @@ export default function ChatPage() {
   };
 
   const pastStep = (step: ChatStep) => {
-    const order: ChatStep[] = ['profile-review', 'ratio-select', 'function-select', 'color-confirm', 'upload', 'processing', 'result-review', 'focus-select', 'caption-display', 'schedule-prompt', 'complete'];
+    const order: ChatStep[] = ['profile-review', 'ratio-intro', 'ratio-select', 'function-select', 'color-confirm', 'upload', 'processing', 'result-review', 'focus-select', 'caption-display', 'schedule-prompt', 'complete'];
     return order.indexOf(currentStep) > order.indexOf(step);
   };
 
@@ -137,7 +145,7 @@ export default function ChatPage() {
   return (
     <MobileLayout noPadding className="!bg-neutral-bg">
       {/* Header */}
-      <div className="gradient-header px-5 pb-4 pt-6 safe-top rounded-b-3xl flex items-center gap-3">
+      <div className="gradient-header px-5 pb-5 pt-6 safe-top rounded-b-[28px] flex items-center gap-3">
         <button
           onClick={() => router.push('/dashboard')}
           className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
@@ -177,7 +185,7 @@ export default function ChatPage() {
                 <input
                   type="radio"
                   name="profile-check"
-                  onChange={() => advanceStep('ratio-select')}
+                  onChange={() => advanceStep('ratio-intro')}
                   className="hidden"
                 />
                 <RadioIcon checked={false} />
@@ -208,10 +216,16 @@ export default function ChatPage() {
           )}
         </ChatBubble>
 
-        {/* Step 2: Ratio Selection */}
+        {/* Step 2a: Ratio Intro bubble */}
+        {atOrPast('ratio-intro') && (
+          <ChatBubble role="ai">
+            <p className="font-medium">Oke, kita lanjut bikin konten promosi kamu ya! 🚀</p>
+          </ChatBubble>
+        )}
+
+        {/* Step 2b: Ratio Selection */}
         {atOrPast('ratio-select') && (
           <ChatBubble role="ai">
-            <p className="mb-4 bg-accent-chat/30 p-3 rounded-xl rounded-tl-none font-medium">Oke, kita lanjut bikin konten promosi kamu ya! 🚀</p>
             <p className="font-semibold mb-1">Konten ini mau dipakai di mana?</p>
             <p className="text-text-secondary text-xs mb-3">Pilih sesuai kebutuhan kamu ya 👇</p>
             <div className="space-y-3">
@@ -307,7 +321,7 @@ export default function ChatPage() {
                     <Button
                       fullWidth
                       size="sm"
-                      className="mt-3 !bg-gray-500 hover:!bg-gray-600"
+                      className="mt-3"
                       onClick={handleGenerateImage}
                     >
                       Kirim
@@ -327,21 +341,39 @@ export default function ChatPage() {
         {/* Step 5: Processing */}
         {currentStep === 'processing' && (
           <ChatBubble role="ai">
-            <div className="flex items-center gap-3">
-              <div className="w-5 h-5 flex-shrink-0 animate-spin text-lg">⏳</div>
+            <div className="flex items-center gap-3 mb-3">
+              <div
+                className="w-5 h-5 flex-shrink-0 rounded-full border-2 border-primary/30 border-t-primary animate-spin-smooth"
+              />
               <p className="text-sm font-medium">
                 Lagi dibuat sesuai keinginan kamu ya... silakan tunggu sebentar
               </p>
             </div>
-          </ChatBubble>
-        )}
 
-        {currentStep === 'processing' && (
-          <ChatBubble role="ai">
-            <div className="space-y-1.5 text-sm font-semibold">
-              <p className="animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>Mempercantik foto produk ✨</p>
-              <p className="animate-fade-in" style={{ animationDelay: '1.5s', animationFillMode: 'both' }}>Menyesuaikan warna 🎨</p>
-              <p className="animate-fade-in" style={{ animationDelay: '2.5s', animationFillMode: 'both' }}>Menyiapkan desain promosi 🔥</p>
+            {/* Processing steps with staggered spinners */}
+            <div className="space-y-3 text-sm font-semibold mb-4">
+              {[
+                { label: 'Mempercantik foto produk ✨', delay: '0.4s' },
+                { label: 'Menyesuaikan warna 🎨', delay: '1.6s' },
+                { label: 'Menyiapkan desain promosi 🔥', delay: '2.8s' },
+              ].map(({ label, delay }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-2.5 animate-fade-in"
+                  style={{ animationDelay: delay, animationFillMode: 'both' }}
+                >
+                  <div
+                    className="w-3.5 h-3.5 rounded-full border-2 border-primary/30 border-t-primary flex-shrink-0 animate-spin-smooth"
+                    style={{ animationDelay: delay }}
+                  />
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Animated progress bar */}
+            <div className="h-1.5 rounded-full bg-neutral-border overflow-hidden">
+              <div className="h-full rounded-full bg-gradient-to-r from-primary to-accent-light progress-bar-animated" />
             </div>
           </ChatBubble>
         )}
@@ -456,7 +488,7 @@ export default function ChatPage() {
                         <p className="font-semibold mb-3">Mau coba caption lain?</p>
                         <Button
                           fullWidth
-                          className="mb-4 !bg-gray-500 hover:!bg-gray-600"
+                          className="mb-4 !bg-text-secondary hover:!bg-text-primary"
                           onClick={() => { incrementRetryCaption(); setCaptions([]); setSelectedCaption(''); handleGenerateCaption(); }}
                         >
                           Buat ulang

@@ -39,9 +39,9 @@ export default function PlatformCard({
         </span>
       )}
       {icon.startsWith('/') ? (
-        <Image src={icon} alt={label} width={prominent ? 44 : 36} height={prominent ? 44 : 36} className="object-contain drop-shadow-sm" />
+        <Image src={icon} alt={label} width={prominent ? 64 : 52} height={prominent ? 64 : 52} className="object-contain drop-shadow-md" />
       ) : (
-        <span className={`${prominent ? 'text-4xl drop-shadow-sm' : 'text-3xl'}`}>{icon}</span>
+        <span className={`${prominent ? 'text-4xl drop-shadow-md' : 'text-3xl drop-shadow-sm'}`}>{icon}</span>
       )}
       <span className={`text-xs font-medium text-center leading-tight ${prominent ? 'text-[13px] font-bold text-primary-dark' : 'text-text-primary'}`}>{label}</span>
     </button>

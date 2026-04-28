@@ -22,6 +22,7 @@ export default function DashboardPage() {
   const user = useAuthStore((s) => s.user);
   const profile = useBusinessStore((s) => s.profile);
   const items = useScheduleStore((s) => s.items);
+  const setSelectedDate = useScheduleStore((s) => s.setSelectedDate);
   const nextSchedule = items.length > 0 ? items[items.length - 1] : null;
 
   const displayName = user?.name && user.name !== 'Pengguna'
@@ -104,7 +105,7 @@ export default function DashboardPage() {
           {/* Schedule Section */}
           <div className="mb-7">
             <h3 className="text-[17px] font-bold text-black mb-3">
-              📅 Lihat Jadwal Promosimu!
+              Lihat Jadwal Promosimu!
             </h3>
             <Card className="p-0 overflow-hidden min-h-[140px]">
               <div className="flex justify-between items-stretch h-full">
@@ -118,7 +119,13 @@ export default function DashboardPage() {
                       <p className="text-[14px] sm:text-[15px] font-semibold text-text-primary mt-1 line-clamp-2">{nextSchedule.title}</p>
                       <Button
                         size="sm"
-                        onClick={() => router.push('/schedule/view')}
+                        onClick={() => {
+                          // Navigate to the most recent scheduled item's date
+                          if (nextSchedule) {
+                            setSelectedDate(nextSchedule.date);
+                          }
+                          router.push('/schedule/view');
+                        }}
                         className="self-start mt-3 text-[13px] sm:text-sm"
                       >
                         Lihat Jadwal
@@ -137,7 +144,7 @@ export default function DashboardPage() {
                         onClick={() => router.push('/chat')}
                         className="self-start text-[13px] sm:text-sm"
                       >
-                        ✨ Buat Konten
+                        Buat Konten
                       </Button>
                     </div>
                   )}

@@ -48,6 +48,7 @@
 }
 
 html {
+  background: #2765F0;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -122,6 +123,18 @@ body {
   }
 }
 
+@keyframes splashExit {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
 @keyframes pulse-glow {
 
   0%,
@@ -131,6 +144,22 @@ body {
 
   50% {
     box-shadow: 0 0 0 12px rgba(91, 109, 255, 0);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -144,6 +173,18 @@ body {
 
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-splash-exit {
+  animation: splashExit 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-spin-smooth {
+  animation: spin 0.8s linear infinite;
+}
+
+.progress-bar-animated {
+  animation: progressFill 6s ease-out forwards;
 }
 
 /* Scrollbar hiding for mobile feel */

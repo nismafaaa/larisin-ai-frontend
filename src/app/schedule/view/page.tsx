@@ -47,16 +47,37 @@ export default function ScheduleViewPage() {
   const selectedDateStr = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
   const dayItems = items.filter((item) => item.date === selectedDateStr);
 
+  const shiftWeek = (direction: -1 | 1) => {
+    const d = new Date(selectedDate);
+    d.setDate(d.getDate() + direction * 7);
+    setSelectedDate(d);
+  };
+
+
   return (
     <MobileLayout noPadding>
       <GradientHeader title="Jadwal" showBack onBack={() => router.push('/dashboard')} />
 
       <div className="flex-1 pb-6">
-        {/* Month label */}
+        {/* Month label + week navigation */}
         <div className="px-6 pt-4 pb-3 flex items-center justify-between">
+          <button
+            onClick={() => shiftWeek(-1)}
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-neutral-border/50 text-text-primary font-bold transition-colors"
+            aria-label="Minggu sebelumnya"
+          >
+            &lt;
+          </button>
           <h3 className="text-lg font-bold text-text-primary">
-            {MONTHS[selectedDate.getMonth()]}
+            {MONTHS[selectedDate.getMonth()]} {selectedDate.getFullYear()}
           </h3>
+          <button
+            onClick={() => shiftWeek(1)}
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-neutral-border/50 text-text-primary font-bold transition-colors"
+            aria-label="Minggu berikutnya"
+          >
+            &gt;
+          </button>
         </div>
 
         {/* Week scroller */}

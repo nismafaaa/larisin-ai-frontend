@@ -121,6 +121,7 @@ export interface ChatMessage {
 
 export type ChatStep =
   | 'profile-review'
+  | 'ratio-intro'
   | 'ratio-select'
   | 'function-select'
   | 'color-confirm'
@@ -131,6 +132,7 @@ export type ChatStep =
   | 'caption-display'
   | 'schedule-prompt'
   | 'complete';
+
 
 // ==================== News ====================
 export interface NewsArticle {

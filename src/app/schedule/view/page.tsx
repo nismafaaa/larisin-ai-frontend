@@ -55,7 +55,7 @@ export default function ScheduleViewPage() {
 
 
   return (
-    <MobileLayout noPadding>
+    <MobileLayout noPadding className="md:!max-w-[700px]">
       <GradientHeader title="Jadwal" showBack onBack={() => router.push('/dashboard')} />
 
       <div className="flex-1 pb-6 bg-white rounded-t-3xl -mt-6 relative z-10">

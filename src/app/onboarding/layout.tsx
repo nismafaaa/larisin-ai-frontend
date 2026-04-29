@@ -23,7 +23,7 @@ export default function OnboardingLayout({
   const currentStep = STEPS.findIndex((s) => pathname?.includes(s)) + 1;
 
   return (
-    <MobileLayout>
+    <MobileLayout className="md:!max-w-[600px] lg:!max-w-[700px]">
       <div className="pt-10 pb-4">
         <ProgressBar currentStep={currentStep || 1} totalSteps={STEPS.length} />
       </div>

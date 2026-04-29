@@ -46,7 +46,7 @@ export default function StylePage() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-3.5 flex-1">
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-3.5 flex-1 content-start">
         {PROMO_STYLES.map((item) => (
           <SelectionChip
             key={item.id}

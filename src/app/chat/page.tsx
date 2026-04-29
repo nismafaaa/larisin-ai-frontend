@@ -143,7 +143,7 @@ export default function ChatPage() {
   const atOrPast = (step: ChatStep) => currentStep === step || pastStep(step);
 
   return (
-    <MobileLayout noPadding className="!bg-neutral-bg">
+    <MobileLayout noPadding className="md:!max-w-[680px]">
       {/* Gradient header — extra bottom padding creates the overlap zone */}
       <div className="gradient-header px-5 pb-10 pt-6 safe-top flex items-center gap-3 flex-shrink-0">
         <button

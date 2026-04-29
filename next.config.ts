@@ -5,10 +5,12 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/wilayah/:path*',
-        destination: 'https://emsifa.github.io/api-wilayah-indonesia/api/:path*',
+        destination: 'https://www.emsifa.com/api-wilayah-indonesia/api/:path*',
       },
     ];
   },
+  // Allow localtunnel host for dev Server
+  allowedDevOrigins: ['nisma-test-app.loca.lt', 'localhost:3000'],
 };
 
 export default nextConfig;

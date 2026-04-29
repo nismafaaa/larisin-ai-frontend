@@ -65,7 +65,7 @@ export default function SignInPage() {
   };
 
   return (
-    <MobileLayout noPadding className="!bg-transparent">
+    <MobileLayout noPadding className="!bg-transparent lg:!max-w-[600px]">
       {/* Gradient Header - tall, matching mockup */}
       <div className="gradient-brand px-6 pt-16 pb-28 flex flex-col items-center relative">
         <div className="w-20 h-20 bg-white rounded-2xl shadow-xl flex items-center justify-center overflow-hidden">

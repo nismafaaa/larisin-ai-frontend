@@ -28,9 +28,9 @@ export default function SplashScreen() {
   }, [isAuthenticated, isOnboarded, router]);
 
   return (
-    <div className="min-h-dvh flex justify-center" style={{ background: '#2765F0' }}>
+    <div className="min-h-dvh flex justify-center gradient-splash">
       <div
-        className={`relative w-full max-w-[430px] min-h-dvh flex flex-col items-center justify-center gradient-splash shadow-2xl transition-opacity duration-400 ${
+        className={`relative w-full max-w-[430px] md:max-w-[520px] lg:max-w-[600px] min-h-dvh flex flex-col items-center justify-center bg-transparent transition-opacity duration-400 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
       >

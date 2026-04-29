@@ -30,26 +30,26 @@ export default function DashboardPage() {
     : getNameFromEmail(user?.email);
 
   return (
-    <MobileLayout noPadding className="!bg-transparent">
-      <div className="flex-1 overflow-y-auto hide-scrollbar gradient-dashboard">
+    <MobileLayout noPadding desktopFull className="!bg-transparent lg:shadow-none" outerClassName="gradient-dashboard">
+      <div className="flex-1 overflow-y-auto hide-scrollbar">
         {/* Top greeting bar — profile pic LEFT of text */}
-        <div className="px-6 pt-12 pb-5 safe-top">
-          <div className="flex items-center gap-4">
+        <div className="px-6 lg:px-10 pt-12 pb-5 lg:pb-8 safe-top">
+          <div className="flex items-center gap-4 lg:gap-6">
             <button
               onClick={() => router.push('/profile')}
-              className="w-14 h-14 rounded-full bg-white/20 border-2 border-white/30 shadow-lg flex items-center justify-center overflow-hidden backdrop-blur-sm flex-shrink-0"
+              className="w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-white/20 border-2 border-white/30 shadow-lg flex items-center justify-center overflow-hidden backdrop-blur-sm flex-shrink-0"
             >
               {user?.avatar ? (
                 <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
               ) : (
-                <span className="text-2xl">👤</span>
+                <span className="text-2xl lg:text-3xl">👤</span>
               )}
             </button>
             <div>
-              <h1 className="text-[22px] font-bold text-black leading-tight">
+              <h1 className="text-[22px] lg:text-3xl font-bold text-black leading-tight">
                 Halo, {displayName}!
               </h1>
-              <p className="text-sm text-black/60 mt-0.5">
+              <p className="text-sm lg:text-base text-black/60 mt-0.5 lg:mt-1">
                 Selamat datang di LarisinAi <span className="text-yellow-300">✨</span>
               </p>
             </div>
@@ -57,11 +57,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Content Sections */}
-        <div className="px-6 pb-10">
-          {/* Video Tutorial Section */}
-          <div className="mb-7">
-            <Card className="p-0 overflow-hidden relative group cursor-pointer shadow-card bg-[#4A4A4A]">
-              <div className="h-[140px] w-full flex items-center justify-center relative">
+        <div className="px-6 lg:px-10 pb-10 flex flex-col lg:flex-row gap-6 lg:gap-8">
+          
+          {/* Left Column (Main Features) */}
+          <div className="flex-1 flex flex-col gap-7">
+            {/* Video Tutorial Section */}
+            <div>
+              <Card className="p-0 overflow-hidden relative group cursor-pointer shadow-card bg-[#4A4A4A]">
+                <div className="h-[140px] lg:h-[180px] w-full flex items-center justify-center relative">
                 {/* Background Logo */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-60">
                   <Image src="/logo/logo-splash.png" alt="Larisin AI" width={180} height={70} className="object-contain" />
@@ -74,18 +77,18 @@ export default function DashboardPage() {
                 </div>
               </div>
               {/* CTA strip */}
-              <div className="bg-white px-4 py-3 flex items-center justify-between">
-                <p className="text-[13px] font-semibold text-text-primary">Tutorial cara pakai LarisinAi</p>
-                <span className="text-[13px] font-bold text-primary">Yuk, lihat caranya! →</span>
+              <div className="bg-white px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between">
+                <p className="text-[13px] lg:text-[15px] font-semibold text-text-primary">Tutorial cara pakai LarisinAi</p>
+                <span className="text-[13px] lg:text-[15px] font-bold text-primary">Yuk, lihat caranya! →</span>
               </div>
             </Card>
-          </div>
+            </div>
 
-          {/* Create Photo Section */}
-          <div className="mb-7">
-            <h3 className="text-[17px] font-bold text-black mb-3">
-              🎨 Kreasikan Foto Produkmu!
-            </h3>
+            {/* Create Photo Section */}
+            <div>
+              <h3 className="text-[17px] lg:text-xl font-bold text-black mb-3">
+                🎨 Kreasikan Foto Produkmu!
+              </h3>
             <Card className="p-0 overflow-hidden min-h-[140px]">
               <div className="flex justify-between items-stretch h-full">
                 <div className="p-4 sm:p-5 flex flex-col justify-center flex-1 pr-2">
@@ -105,14 +108,14 @@ export default function DashboardPage() {
                 </div>
               </div>
             </Card>
-          </div>
+            </div>
 
-          {/* Schedule Section */}
-          <div className="mb-7">
-            <h3 className="text-[17px] font-bold text-black mb-3">
-              📅Lihat Jadwal Promosimu!
-            </h3>
-            <Card className="p-0 overflow-hidden min-h-[140px]">
+            {/* Schedule Section */}
+            <div>
+              <h3 className="text-[17px] lg:text-xl font-bold text-black mb-3">
+                📅Lihat Jadwal Promosimu!
+              </h3>
+              <Card className="p-0 overflow-hidden min-h-[140px] lg:min-h-[160px]">
               <div className="flex justify-between items-stretch h-full">
                 <div className="p-4 sm:p-5 flex flex-col justify-center flex-1 pr-2">
                   {nextSchedule ? (
@@ -160,10 +163,11 @@ export default function DashboardPage() {
               </div>
             </Card>
           </div>
+          </div>
 
-          {/* News Section */}
-          <div className="mb-4">
-            <h3 className="text-[17px] font-bold text-black mb-3">
+          {/* Right Column (News Feed) */}
+          <div className="lg:w-[350px] xl:w-[400px]">
+            <h3 className="text-[17px] lg:text-xl font-bold text-black mb-3">
               📰 Informasi Terkini
             </h3>
             <div className="flex flex-col gap-3">
@@ -187,10 +191,10 @@ export default function DashboardPage() {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-[11px] text-text-secondary mb-1">
+                        <p className="text-[11px] lg:text-xs text-text-secondary mb-1">
                           {article.source} · {article.date}
                         </p>
-                        <p className="text-[14px] font-semibold text-text-primary leading-snug line-clamp-3">
+                        <p className="text-[14px] lg:text-[15px] font-semibold text-text-primary leading-snug line-clamp-3">
                           {article.title}
                         </p>
                       </div>
@@ -200,6 +204,7 @@ export default function DashboardPage() {
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </MobileLayout>

@@ -161,22 +161,25 @@ function BusinessDataContent() {
 
   // ── render ─────────────────────────────────────────────────────────────────
   return (
-    <MobileLayout noPadding>
+    <MobileLayout noPadding desktopFull>
       <GradientHeader title="Data Bisnis" showBack onBack={handleBack} />
 
-      <div className="flex-1 px-6 pt-7 pb-8 overflow-y-auto hide-scrollbar bg-white rounded-t-3xl -mt-6 relative z-10">
+      <div className="flex-1 px-6 lg:px-10 pt-7 pb-8 overflow-y-auto hide-scrollbar bg-white rounded-t-3xl -mt-6 relative z-10">
+        
+        <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-8">
+          {/* LEFT COLUMN */}
+          <div className="flex flex-col">
+            {/* ── Nama Bisnis ──────────────────────────── */}
+            <section className="mb-7">
+              <Input
+                label="Nama Bisnis"
+                value={namaBisnis}
+                onChange={(e) => setNamaBisnis(e.target.value)}
+              />
+            </section>
 
-        {/* ── Nama Bisnis ──────────────────────────── */}
-        <section className="mb-7">
-          <Input
-            label="Nama Bisnis"
-            value={namaBisnis}
-            onChange={(e) => setNamaBisnis(e.target.value)}
-          />
-        </section>
-
-        {/* ── Jenis Bisnis (single + custom) ───────── */}
-        <section className="mb-7">
+            {/* ── Jenis Bisnis (single + custom) ───────── */}
+            <section className="mb-7">
           <h3 className="text-sm font-semibold text-text-primary mb-3">Jenis Bisnis</h3>
           <div className="flex flex-col gap-2.5">
             {BUSINESS_TYPES.map((item) => (
@@ -202,37 +205,40 @@ function BusinessDataContent() {
           </div>
         </section>
 
-        {/* ── Target Pembeli (single + custom) ─────── */}
-        <section className="mb-7">
-          <h3 className="text-sm font-semibold text-text-primary mb-3">Target Pembeli</h3>
-          <div className="flex flex-col gap-2.5">
-            {TARGET_BUYERS.map((item) => (
-              <SelectionChip
-                key={item.id}
-                emoji={item.emoji}
-                label={item.label}
-                selected={targetId === item.id}
-                onClick={() => { setTargetId(item.id); setTargetCustom(''); }}
-              />
-            ))}
+            {/* ── Target Pembeli (single + custom) ─────── */}
+            <section className="mb-7">
+              <h3 className="text-sm font-semibold text-text-primary mb-3">Target Pembeli</h3>
+              <div className="flex flex-col gap-2.5">
+                {TARGET_BUYERS.map((item) => (
+                  <SelectionChip
+                    key={item.id}
+                    emoji={item.emoji}
+                    label={item.label}
+                    selected={targetId === item.id}
+                    onClick={() => { setTargetId(item.id); setTargetCustom(''); }}
+                  />
+                ))}
+              </div>
+              <div className="mt-3">
+                <Input
+                  placeholder="Tulis target pembelimu sendiri"
+                  value={targetCustom}
+                  onChange={(e) => {
+                    setTargetCustom(e.target.value);
+                    setTargetId(e.target.value.trim() ? 'custom' : '');
+                  }}
+                  hint="Contoh: Seniman"
+                />
+              </div>
+            </section>
           </div>
-          <div className="mt-3">
-            <Input
-              placeholder="Tulis target pembelimu sendiri"
-              value={targetCustom}
-              onChange={(e) => {
-                setTargetCustom(e.target.value);
-                setTargetId(e.target.value.trim() ? 'custom' : '');
-              }}
-              hint="Contoh: Seniman"
-            />
-          </div>
-        </section>
 
-        {/* ── Warna Brand (single + custom) ────────── */}
-        <section className="mb-7">
-          <h3 className="text-sm font-semibold text-text-primary mb-3">Warna Brand</h3>
-          <div className="grid grid-cols-3 gap-3">
+          {/* RIGHT COLUMN */}
+          <div className="flex flex-col">
+            {/* ── Warna Brand (single + custom) ────────── */}
+            <section className="mb-7">
+              <h3 className="text-sm font-semibold text-text-primary mb-3">Warna Brand</h3>
+              <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
             {BRAND_COLORS.map((item) => (
               <ColorChip
                 key={item.id}
@@ -256,10 +262,10 @@ function BusinessDataContent() {
           </div>
         </section>
 
-        {/* ── Platform (multi-select) ──────────────── */}
-        <section className="mb-7">
-          <h3 className="text-sm font-semibold text-text-primary mb-3">Tempat Jualan</h3>
-          <div className="grid grid-cols-2 gap-3">
+            {/* ── Platform (multi-select) ──────────────── */}
+            <section className="mb-7">
+              <h3 className="text-sm font-semibold text-text-primary mb-3">Tempat Jualan</h3>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             {PLATFORMS.map((item) => (
               <PlatformCard
                 key={item.id}
@@ -289,25 +295,27 @@ function BusinessDataContent() {
           </div>
         </section>
 
-        {/* ── Gaya Promosi (single select) ─────────── */}
-        <section className="mb-7">
-          <h3 className="text-sm font-semibold text-text-primary mb-3">Gaya Promosi</h3>
-          <div className="flex flex-col gap-2.5">
-            {PROMO_STYLES.map((item) => (
-              <SelectionChip
-                key={item.id}
-                emoji={item.emoji}
-                label={item.label}
-                example={'example' in item ? item.example : undefined}
-                selected={gayaId === item.id}
-                onClick={() => setGayaId(item.id)}
-              />
-            ))}
+            {/* ── Gaya Promosi (single select) ─────────── */}
+            <section className="mb-7">
+              <h3 className="text-sm font-semibold text-text-primary mb-3">Gaya Promosi</h3>
+              <div className="flex flex-col gap-2.5">
+                {PROMO_STYLES.map((item) => (
+                  <SelectionChip
+                    key={item.id}
+                    emoji={item.emoji}
+                    label={item.label}
+                    example={'example' in item ? item.example : undefined}
+                    selected={gayaId === item.id}
+                    onClick={() => setGayaId(item.id)}
+                  />
+                ))}
+              </div>
+            </section>
           </div>
-        </section>
+        </div>
 
         {/* ── Save button ─────────────────────────── */}
-        <div className="mt-4 pb-2">
+        <div className="mt-4 pb-2 lg:col-span-2 lg:max-w-md lg:mx-auto lg:w-full">
           <Button
             fullWidth
             size="lg"

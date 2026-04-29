@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const UPSTREAM = 'https://emsifa.github.io/api-wilayah-indonesia/api';
+const UPSTREAM = 'https://www.emsifa.com/api-wilayah-indonesia/api';
 
 export async function GET(
   _req: NextRequest,

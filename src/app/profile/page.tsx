@@ -34,7 +34,7 @@ export default function ProfilePage() {
   ];
 
   return (
-    <MobileLayout noPadding className="!bg-white">
+    <MobileLayout noPadding className="md:!max-w-[680px]">
       {/* Gradient Header with back button */}
       <GradientHeader title="Profil" showBack />
 

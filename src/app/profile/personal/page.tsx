@@ -62,7 +62,7 @@ export default function PersonalDataPage() {
   };
 
   return (
-    <MobileLayout noPadding>
+    <MobileLayout noPadding desktopFull>
       <GradientHeader title="Data Diri" showBack />
 
       <div className="flex-1 px-6 pb-8 overflow-y-auto bg-white rounded-t-3xl -mt-6 relative z-10">
@@ -101,11 +101,11 @@ export default function PersonalDataPage() {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-neutral-border/50 mb-6" />
+        <div className="h-px bg-neutral-border/50 mb-6 lg:mb-8" />
 
-        <h3 className="font-bold text-text-primary text-lg mb-5">Data Diri</h3>
+        <h3 className="font-bold text-text-primary text-lg lg:text-xl mb-5 lg:mb-6">Data Diri</h3>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-5 lg:gap-8">
           <Input
             label="Nama"
             value={form.nama}
@@ -129,7 +129,7 @@ export default function PersonalDataPage() {
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 lg:col-span-2 lg:max-w-md">
             <label className="text-sm font-semibold text-text-primary">Lokasi</label>
             <LocationPicker
               value={form.lokasi}
@@ -138,7 +138,7 @@ export default function PersonalDataPage() {
           </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 lg:mt-12 max-w-md">
           <Button fullWidth size="lg" onClick={handleSave} loading={loading}>
             {saved ? '✅ Tersimpan!' : 'Simpan'}
           </Button>

@@ -20,7 +20,7 @@ export default function ChatBubble({ role, children, className = '' }: ChatBubbl
         </div>
       )}
       <div
-        className={`max-w-[85%] px-4 py-3 text-sm leading-relaxed ${
+        className={`max-w-[85%] md:max-w-[75%] px-4 py-3 text-sm leading-relaxed ${
           isAI
             ? 'bubble-ai bg-white shadow-sm text-text-primary'
             : 'bubble-user text-text-primary'

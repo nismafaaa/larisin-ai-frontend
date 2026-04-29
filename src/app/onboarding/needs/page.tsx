@@ -39,7 +39,7 @@ export default function NeedsPage() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-3.5 flex-1">
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-3.5 flex-1 content-start">
         {NEEDS.map((item) => (
           <SelectionChip
             key={item.id}

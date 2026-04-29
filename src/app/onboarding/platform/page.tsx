@@ -39,7 +39,7 @@ export default function PlatformPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 flex-1">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 flex-1">
         {PLATFORMS.map((item) => (
           <PlatformCard
             key={item.id}

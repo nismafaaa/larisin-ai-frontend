@@ -45,15 +45,17 @@ export default function BusinessTypePage() {
       </div>
 
       <div className="flex flex-col gap-3.5 flex-1">
-        {BUSINESS_TYPES.map((item) => (
-          <SelectionChip
-            key={item.id}
-            emoji={item.emoji}
-            label={item.label}
-            selected={selected === item.id}
-            onClick={() => handleSelect(item.id)}
-          />
-        ))}
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-3.5">
+          {BUSINESS_TYPES.map((item) => (
+            <SelectionChip
+              key={item.id}
+              emoji={item.emoji}
+              label={item.label}
+              selected={selected === item.id}
+              onClick={() => handleSelect(item.id)}
+            />
+          ))}
+        </div>
 
         <div className="mt-6">
           <p className="text-sm font-semibold text-text-primary mb-2">

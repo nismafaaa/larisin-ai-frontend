@@ -126,7 +126,7 @@ export default function SchedulePage() {
     day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
 
   return (
-    <MobileLayout noPadding>
+    <MobileLayout noPadding className="md:!max-w-[700px]">
       <GradientHeader title="Jadwal" showBack />
 
       <div className="flex-1 px-6 pt-7 pb-6 bg-white rounded-t-3xl -mt-6 relative z-10">
@@ -234,7 +234,7 @@ export default function SchedulePage() {
             Kami sudah pilihkan waktu terbaik untuk kamu
           </p>
 
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
             {RECOMMENDED_TIMES.map((time) => (
               <button
                 key={time}

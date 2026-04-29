@@ -45,15 +45,17 @@ export default function TargetPage() {
       </div>
 
       <div className="flex flex-col gap-3.5 flex-1">
-        {TARGET_BUYERS.map((item) => (
-          <SelectionChip
-            key={item.id}
-            emoji={item.emoji}
-            label={item.label}
-            selected={selected === item.id}
-            onClick={() => handleSelect(item.id)}
-          />
-        ))}
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-3.5">
+          {TARGET_BUYERS.map((item) => (
+            <SelectionChip
+              key={item.id}
+              emoji={item.emoji}
+              label={item.label}
+              selected={selected === item.id}
+              onClick={() => handleSelect(item.id)}
+            />
+          ))}
+        </div>
 
         <div className="mt-6">
           <p className="text-sm font-semibold text-text-primary mb-2">

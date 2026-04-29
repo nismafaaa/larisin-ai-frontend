@@ -22,7 +22,7 @@ export default function GradientHeader({ title, showBack, onBack }: GradientHead
   };
 
   return (
-    <div className="gradient-header px-5 pb-12 pt-6 safe-top">
+    <div className="gradient-header px-5 md:px-8 pb-12 pt-6 md:pt-8 safe-top">
       <div className="flex items-center gap-3">
         {showBack && (
           <button
@@ -32,7 +32,7 @@ export default function GradientHeader({ title, showBack, onBack }: GradientHead
             <ChevronLeft className="w-5 h-5 text-white" />
           </button>
         )}
-        <h1 className="text-xl font-bold text-white">{title}</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-white">{title}</h1>
       </div>
     </div>
   );

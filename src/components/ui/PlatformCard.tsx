@@ -24,7 +24,7 @@ export default function PlatformCard({
       type="button"
       onClick={onClick}
       className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl transition-all duration-200 active:scale-95 relative z-10 ${
-        prominent && !selected ? 'shadow-md scale-[1.02] bg-gradient-to-br from-white to-accent-chat/30 border-2 border-primary/30' : ''
+        prominent && !selected ? 'bg-gradient-to-br from-white to-accent-chat/30 border-2 border-primary/20' : ''
       } ${
         selected
           ? 'bg-accent-light/30 border-2 border-accent-light shadow-sm'
@@ -39,11 +39,12 @@ export default function PlatformCard({
         </span>
       )}
       {icon.startsWith('/') ? (
-        <Image src={icon} alt={label} width={prominent ? 64 : 52} height={prominent ? 64 : 52} className="object-contain drop-shadow-md" />
+        <Image src={icon} alt={label} width={prominent ? 64 : 52} height={prominent ? 64 : 52} className="object-contain drop-shadow-sm" />
       ) : (
-        <span className={`${prominent ? 'text-4xl drop-shadow-md' : 'text-3xl drop-shadow-sm'}`}>{icon}</span>
+        <span className={`${prominent ? 'text-4xl drop-shadow-sm' : 'text-3xl drop-shadow-sm'}`}>{icon}</span>
       )}
       <span className={`text-xs font-medium text-center leading-tight ${prominent ? 'text-[13px] font-bold text-primary-dark' : 'text-text-primary'}`}>{label}</span>
     </button>
   );
+
 }

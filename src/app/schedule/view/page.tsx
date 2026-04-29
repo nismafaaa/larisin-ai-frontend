@@ -58,7 +58,7 @@ export default function ScheduleViewPage() {
     <MobileLayout noPadding>
       <GradientHeader title="Jadwal" showBack onBack={() => router.push('/dashboard')} />
 
-      <div className="flex-1 pb-6">
+      <div className="flex-1 pb-6 bg-white rounded-t-3xl -mt-6 relative z-10">
         {/* Month label + week navigation */}
         <div className="px-6 pt-4 pb-3 flex items-center justify-between">
           <button

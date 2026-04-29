@@ -164,7 +164,7 @@ function BusinessDataContent() {
     <MobileLayout noPadding>
       <GradientHeader title="Data Bisnis" showBack onBack={handleBack} />
 
-      <div className="flex-1 px-6 pt-6 pb-8 overflow-y-auto hide-scrollbar">
+      <div className="flex-1 px-6 pt-7 pb-8 overflow-y-auto hide-scrollbar bg-white rounded-t-3xl -mt-6 relative z-10">
 
         {/* ── Nama Bisnis ──────────────────────────── */}
         <section className="mb-7">

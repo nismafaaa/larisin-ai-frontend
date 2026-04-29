@@ -73,6 +73,11 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
+              {/* CTA strip */}
+              <div className="bg-white px-4 py-3 flex items-center justify-between">
+                <p className="text-[13px] font-semibold text-text-primary">Tutorial cara pakai LarisinAi</p>
+                <span className="text-[13px] font-bold text-primary">Yuk, lihat caranya! →</span>
+              </div>
             </Card>
           </div>
 
@@ -105,7 +110,7 @@ export default function DashboardPage() {
           {/* Schedule Section */}
           <div className="mb-7">
             <h3 className="text-[17px] font-bold text-black mb-3">
-              Lihat Jadwal Promosimu!
+              📅Lihat Jadwal Promosimu!
             </h3>
             <Card className="p-0 overflow-hidden min-h-[140px]">
               <div className="flex justify-between items-stretch h-full">
@@ -163,22 +168,35 @@ export default function DashboardPage() {
             </h3>
             <div className="flex flex-col gap-3">
               {NEWS_ARTICLES.map((article) => (
-                <Card key={article.id} className="p-4">
-                  <div className="flex gap-3 items-start">
-                    <div
-                      className="w-12 h-12 rounded-xl flex-shrink-0"
-                      style={{ backgroundColor: article.color + '20' }}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-text-secondary mb-1">
-                        {article.source} · {article.date}
-                      </p>
-                      <p className="text-[15px] font-semibold text-text-primary leading-snug">
-                        {article.title}
-                      </p>
+                <a
+                  key={article.id}
+                  href={article.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Card className="p-3 hover:shadow-lg transition-shadow">
+                    <div className="flex gap-3 items-start">
+                      <div className="w-14 h-14 rounded-xl flex-shrink-0 overflow-hidden bg-neutral-card">
+                        <Image
+                          src={article.thumbnail}
+                          alt={article.title}
+                          width={56}
+                          height={56}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] text-text-secondary mb-1">
+                          {article.source} · {article.date}
+                        </p>
+                        <p className="text-[14px] font-semibold text-text-primary leading-snug line-clamp-3">
+                          {article.title}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </a>
               ))}
             </div>
           </div>

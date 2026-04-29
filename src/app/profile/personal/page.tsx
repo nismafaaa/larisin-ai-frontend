@@ -65,9 +65,9 @@ export default function PersonalDataPage() {
     <MobileLayout noPadding>
       <GradientHeader title="Data Diri" showBack />
 
-      <div className="flex-1 px-6 pb-8 overflow-y-auto">
+      <div className="flex-1 px-6 pb-8 overflow-y-auto bg-white rounded-t-3xl -mt-6 relative z-10">
         {/* Avatar */}
-        <div className="flex flex-col items-center pt-8 pb-8">
+        <div className="flex flex-col items-center pt-10 pb-8">
           <div className="relative mb-3">
             <div className="w-28 h-28 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
               {avatarPreview ? (

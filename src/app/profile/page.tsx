@@ -38,9 +38,8 @@ export default function ProfilePage() {
       {/* Gradient Header with back button */}
       <GradientHeader title="Profil" showBack />
 
-      <div className="flex-1 pb-8">
-        {/* Avatar Section */}
-        <div className="flex flex-col items-center pt-8 pb-8">
+      <div className="flex-1 pb-8 bg-white rounded-t-3xl -mt-6 relative z-10">
+        <div className="flex flex-col items-center pt-10 pb-8">
           <div className="w-28 h-28 rounded-full bg-accent-chat flex items-center justify-center mb-5 shadow-lg border-4 border-white overflow-hidden">
             {user?.avatar ? (
               <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />

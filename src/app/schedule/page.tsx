@@ -129,7 +129,7 @@ export default function SchedulePage() {
     <MobileLayout noPadding>
       <GradientHeader title="Jadwal" showBack />
 
-      <div className="flex-1 px-6 pt-6 pb-6">
+      <div className="flex-1 px-6 pt-7 pb-6 bg-white rounded-t-3xl -mt-6 relative z-10">
         <h2 className="text-xl font-bold text-text-primary mb-2">
           Pilih tanggal upload!
         </h2>

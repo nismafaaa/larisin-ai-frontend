@@ -79,34 +79,42 @@ export const CAPTION_FOCUS = [
 // ==================== Recommended Times ====================
 export const RECOMMENDED_TIMES = ['09:30', '10:30', '12:00', '15:30'];
 
-// ==================== News Feed (Hardcoded) ====================
+// ==================== News Feed ====================
 export const NEWS_ARTICLES = [
   {
     id: '1',
-    title: 'Lariskan UMKM dengan Belajar Menggunakan AI Bersama',
-    date: '18 April 2026',
-    source: 'UMKM News',
+    title: 'Strategi Digital Marketing untuk UMKM di Era Persaingan Online',
+    date: '27 Maret 2026',
+    source: 'Kompasiana',
+    thumbnail: '/article-thumbnail/artikel-1.png',
+    link: 'https://www.kompasiana.com/prfeducationmitramediatama/69c5ac7bed6415223c280992/strategi-digital-marketing-untuk-umkm-di-era-persaingan-online',
     color: '#5B6DFF',
   },
   {
     id: '2',
-    title: 'Modal 0 Rupiah Bisa Untung Jutaan Rupiah',
-    date: '16 April 2026',
-    source: 'UMKM News',
+    title: 'Strategi Digital Marketing yang Efektif: Kunci Bertahan dan Bertumbuh di Era Digital',
+    date: '19 Februari 2026',
+    source: 'Kompasiana',
+    thumbnail: '/article-thumbnail/artikel-2.png',
+    link: 'https://www.kompasiana.com/prfeducationmitramediatama/699677cd34777c32f11d7d02/strategi-digital-marketing-yang-efektif-kunci-bertahan-dan-bertumbuh-di-era-digital',
     color: '#4E8FF3',
   },
   {
     id: '3',
-    title: 'Jangan Sampai Tertipu! Waspada Penipuan Bukti Transfer',
-    date: '10 April 2026',
-    source: 'UMKM News',
+    title: 'Kementerian UMKM Dorong Adopsi AI untuk Perkuat Ekonomi Inklusif',
+    date: '21 April 2026',
+    source: 'umkm.go.id',
+    thumbnail: '/article-thumbnail/artikel-3.png',
+    link: 'https://umkm.go.id/news/y3vlf19kvx1zcemwdxewows1',
     color: '#69D1F4',
   },
   {
     id: '4',
-    title: 'Makanan Sehat Mulai Digemari Hingga jadi Ide Jualan Baru?',
-    date: '30 Maret 2026',
-    source: 'UMKM News',
+    title: 'AI Generatif Sebagai Solusi Inovatif Bisnis UMKM',
+    date: '22 November 2024',
+    source: 'ioh.co.id',
+    thumbnail: '/article-thumbnail/artikel-4.png',
+    link: 'https://ioh.co.id/portal/id/iohcorparticledetail/ai-generatif-sebagai-solusi-inovatif-bisnis-umkm',
     color: '#5B6DFF',
   },
 ];

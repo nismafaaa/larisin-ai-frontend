@@ -144,8 +144,8 @@ export default function ChatPage() {
 
   return (
     <MobileLayout noPadding className="!bg-neutral-bg">
-      {/* Header */}
-      <div className="gradient-header px-5 pb-5 pt-6 safe-top rounded-b-[28px] flex items-center gap-3">
+      {/* Gradient header — extra bottom padding creates the overlap zone */}
+      <div className="gradient-header px-5 pb-10 pt-6 safe-top flex items-center gap-3 flex-shrink-0">
         <button
           onClick={() => router.push('/dashboard')}
           className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
@@ -155,10 +155,10 @@ export default function ChatPage() {
         <h1 className="text-lg font-bold text-white">LarisinAi</h1>
       </div>
 
-      {/* Chat Messages */}
+      {/* Chat Messages — slides up over header with rounded-t-3xl for inverted corner */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto hide-scrollbar px-5 py-6 space-y-5 bg-gradient-to-b from-blue-50/50 to-neutral-bg"
+        className="flex-1 overflow-y-auto hide-scrollbar px-5 pt-5 pb-6 space-y-5 bg-neutral-bg rounded-t-3xl -mt-5 relative z-10"
       >
         {/* Step 1: Profile Review */}
         <ChatBubble role="ai">

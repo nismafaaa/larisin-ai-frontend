@@ -22,7 +22,7 @@ export default function GradientHeader({ title, showBack, onBack }: GradientHead
   };
 
   return (
-    <div className="gradient-header px-5 pb-5 pt-6 safe-top rounded-b-[28px]">
+    <div className="gradient-header px-5 pb-12 pt-6 safe-top">
       <div className="flex items-center gap-3">
         {showBack && (
           <button

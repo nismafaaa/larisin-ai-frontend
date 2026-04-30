@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import MobileLayout from '@/components/layout/MobileLayout';
 import ChatBubble from '@/components/ui/ChatBubble';
 import Button from '@/components/ui/Button';
@@ -11,7 +10,7 @@ import { useBusinessStore } from '@/stores/businessStore';
 import { useChatStore } from '@/stores/chatStore';
 import { aiService } from '@/services/aiService';
 import { CONTENT_RATIOS, EDIT_FUNCTIONS } from '@/lib/constants';
-import { Upload, ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Download } from 'lucide-react';
 import type { ChatStep } from '@/types';
 
 const RadioIcon = ({ checked }: { checked: boolean }) => {
@@ -35,7 +34,7 @@ export default function ChatPage() {
     currentStep, setStep,
     selectedRatio, setSelectedRatio,
     selectedFunction, setSelectedFunction,
-    setSelectedImage, selectedImageUrl,
+    selectedImage, setSelectedImage, selectedImageUrl,
     resultImageUrl, setResultImageUrl,
     selectedCaption, setSelectedCaption,
     selectedHashtags, setSelectedHashtags,
@@ -46,8 +45,11 @@ export default function ChatPage() {
 
   const [userInput, setUserInput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isCaptionLoading, setIsCaptionLoading] = useState(false);
   const [captions, setCaptions] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [imageProgress, setImageProgress] = useState(0);
+  const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,7 +61,13 @@ export default function ChatPage() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [currentStep, isProcessing, captions, isTyping, scrollToBottom]);
+  }, [currentStep, isProcessing, isCaptionLoading, captions, isTyping, scrollToBottom]);
+
+  useEffect(() => {
+    return () => {
+      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     resetChat();
@@ -91,11 +99,34 @@ export default function ChatPage() {
     }
   };
 
+  const startProgressBar = () => {
+    setImageProgress(0);
+    if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+    const startTime = Date.now();
+    const totalDuration = 40000;
+    progressIntervalRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const raw = Math.min(elapsed / totalDuration, 1);
+      const eased = 1 - Math.pow(1 - raw, 2);
+      const progress = Math.min(eased * 90, 90);
+      setImageProgress(progress);
+    }, 200);
+  };
+
+  const completeProgressBar = () => {
+    if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+    setImageProgress(100);
+  };
+
   const handleGenerateImage = async () => {
     setIsProcessing(true);
     advanceStep('processing', 0);
+    startProgressBar();
     try {
       const formData = new FormData();
+      if (selectedImage) {
+        formData.append('file', selectedImage);
+      }
       formData.append('ukuran_rasio', selectedRatio);
       formData.append('fungsi_edit', selectedFunction);
       formData.append('instruksi_tambahan', userInput);
@@ -105,9 +136,12 @@ export default function ChatPage() {
       formData.append('business_gaya_promosi', profile.gaya_promosi);
 
       const result = await aiService.generateImage(formData);
+      completeProgressBar();
       setResultImageUrl(result.result_image_url);
+      await new Promise(r => setTimeout(r, 500));
       advanceStep('result-review', 600);
     } catch {
+      completeProgressBar();
       advanceStep('upload', 600);
     } finally {
       setIsProcessing(false);
@@ -116,11 +150,12 @@ export default function ChatPage() {
 
   const handleGenerateCaption = async () => {
     setIsProcessing(true);
+    setIsCaptionLoading(true);
     setStep('caption-display');
     try {
       const result = await aiService.generateCaption({
         image_url: resultImageUrl,
-        fokus_promosi: '',
+        fokus_promosi: userInput || 'Promosi produk',
         business_jenis: profile.jenis_bisnis,
         business_target: profile.target_pembeli,
         business_gaya_promosi: profile.gaya_promosi,
@@ -132,6 +167,7 @@ export default function ChatPage() {
       setStep('result-review');
     } finally {
       setIsProcessing(false);
+      setIsCaptionLoading(false);
     }
   };
 
@@ -341,39 +377,39 @@ export default function ChatPage() {
         {/* Step 5: Processing */}
         {currentStep === 'processing' && (
           <ChatBubble role="ai">
-            <div className="flex items-center gap-3 mb-3">
-              <div
-                className="w-5 h-5 flex-shrink-0 rounded-full border-2 border-primary/30 border-t-primary animate-spin-smooth"
-              />
-              <p className="text-sm font-medium">
-                Lagi dibuat sesuai keinginan kamu ya... silakan tunggu sebentar
-              </p>
-            </div>
+            <p className="text-sm font-medium mb-3">
+              Lagi dibuat sesuai keinginan kamu ya... silakan tunggu sebentar 🎨
+            </p>
 
-            {/* Processing steps with staggered spinners */}
-            <div className="space-y-3 text-sm font-semibold mb-4">
+            {/* Processing steps with staggered fade-in */}
+            <div className="space-y-2.5 text-sm font-semibold mb-4">
               {[
                 { label: 'Mempercantik foto produk ✨', delay: '0.4s' },
-                { label: 'Menyesuaikan warna 🎨', delay: '1.6s' },
-                { label: 'Menyiapkan desain promosi 🔥', delay: '2.8s' },
+                { label: 'Menyesuaikan warna 🎨', delay: '8s' },
+                { label: 'Menyiapkan desain promosi 🔥', delay: '18s' },
               ].map(({ label, delay }) => (
                 <div
                   key={label}
                   className="flex items-center gap-2.5 animate-fade-in"
                   style={{ animationDelay: delay, animationFillMode: 'both' }}
                 >
-                  <div
-                    className="w-3.5 h-3.5 rounded-full border-2 border-primary/30 border-t-primary flex-shrink-0 animate-spin-smooth"
-                    style={{ animationDelay: delay }}
-                  />
+                  <span className="text-xs">•</span>
                   <span>{label}</span>
                 </div>
               ))}
             </div>
 
-            {/* Animated progress bar */}
-            <div className="h-1.5 rounded-full bg-neutral-border overflow-hidden">
-              <div className="h-full rounded-full bg-gradient-to-r from-primary to-accent-light progress-bar-animated" />
+            {/* JS-driven progress bar synced with actual request */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-1.5 rounded-full bg-neutral-border overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-accent-light progress-bar-animated"
+                  style={{ width: `${imageProgress}%` }}
+                />
+              </div>
+              <span className="text-xs font-medium text-text-secondary tabular-nums w-8 text-right">
+                {Math.round(imageProgress)}%
+              </span>
             </div>
           </ChatBubble>
         )}
@@ -382,10 +418,22 @@ export default function ChatPage() {
         {atOrPast('result-review') && resultImageUrl && (
           <ChatBubble role="ai">
             <p className="font-semibold mb-3">Ini hasilnya 👇</p>
-            <div className="rounded-xl overflow-hidden mb-4 bg-neutral-card/50 border border-neutral-border/50">
+            <div className="rounded-xl overflow-hidden mb-3 bg-neutral-card/50 border border-neutral-border/50">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={resultImageUrl} alt="Hasil gambar AI" className="w-full max-h-64 object-contain" />
             </div>
+
+            {/* Download button */}
+            <a
+              href={resultImageUrl}
+              download="larisin-ai-result.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-2.5 mb-4 rounded-xl bg-gradient-to-r from-primary to-accent-light text-white text-sm font-semibold shadow-sm hover:opacity-90 transition-opacity"
+            >
+              <Download className="w-4 h-4" />
+              Download Gambar
+            </a>
 
             <p className="font-semibold mb-3">Sudah sesuai, atau mau diperbaiki?</p>
             {currentStep === 'result-review' ? (
@@ -433,10 +481,32 @@ export default function ChatPage() {
         {/* Step 8: Caption Display */}
         {atOrPast('caption-display') && (
           <ChatBubble role="ai">
-            {isProcessing && captions.length === 0 ? (
-              <div className="flex items-start gap-3">
-                <span className="animate-pulse text-lg mt-0.5">✍️</span>
-                <p className="font-semibold text-sm leading-relaxed">AI lagi menulis caption terbaik buat kamu</p>
+            {isCaptionLoading && captions.length === 0 ? (
+              <div>
+                <p className="text-sm font-medium mb-3">
+                  ✍️ AI lagi menulis caption terbaik buat kamu...
+                </p>
+
+                <div className="space-y-2 text-sm font-semibold mb-4">
+                  {[
+                    { label: 'Menganalisis gambar 🖼️', delay: '0.3s' },
+                    { label: 'Menulis caption menarik ✨', delay: '1.5s' },
+                  ].map(({ label, delay }) => (
+                    <div
+                      key={label}
+                      className="flex items-center gap-2.5 animate-fade-in"
+                      style={{ animationDelay: delay, animationFillMode: 'both' }}
+                    >
+                      <span className="text-xs">•</span>
+                      <span>{label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Caption progress bar (~5s) */}
+                <div className="h-1.5 rounded-full bg-neutral-border overflow-hidden">
+                  <div className="h-full rounded-full bg-gradient-to-r from-primary to-accent-light progress-bar-caption" />
+                </div>
               </div>
             ) : (
               <>

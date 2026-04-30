@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   description: "Asisten pemasaran AI untuk UMKM Indonesia. Edit foto produk, buat caption promosi, dan atur jadwal posting dengan mudah!",
   keywords: "UMKM, AI, pemasaran, foto produk, caption, promosi, Indonesia",
   authors: [{ name: "Larisin AI" }],
+  other: {
+    "dicoding:email": [
+      "diyangraditya144@gmail.com",
+      "najwamuthiaaziz@student.ub.ac.id",
+      "nisma.aro@gmail.com",
+    ],
+  },
 };
 
 export const viewport: Viewport = {

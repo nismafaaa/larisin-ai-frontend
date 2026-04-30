@@ -157,6 +157,18 @@ body {
   }
 }
 
+@keyframes progressFillCaption {
+  0% {
+    width: 0%;
+  }
+  80% {
+    width: 85%;
+  }
+  100% {
+    width: 95%;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -184,7 +196,11 @@ body {
 }
 
 .progress-bar-animated {
-  animation: progressFill 6s ease-out forwards;
+  transition: width 0.5s ease-out;
+}
+
+.progress-bar-caption {
+  animation: progressFillCaption 5s ease-out forwards;
 }
 
 /* Scrollbar hiding for mobile feel */
